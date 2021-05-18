@@ -61,5 +61,5 @@ public class StackBook<E> {
     public boolean search(E o){
         return list.contains(o);
     }
-}
+} 
 
