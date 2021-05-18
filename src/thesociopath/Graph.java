@@ -33,7 +33,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>>{
          Vertex<T,N> temp = head;
          while (temp!=null) {
             if ( temp.vertexInfo.compareTo( v ) == 0 )
-               return temp.indeg;
+               return temp.indeg; 
             temp=temp.nextVertex;
          }
       }
