@@ -28,4 +28,4 @@ public class Edge<T extends Comparable<T>, N extends Comparable<N>>{
 		nextEdge = a;
 	}
 
-}
+} 
