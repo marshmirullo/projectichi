@@ -11,4 +11,4 @@ package thesociopath;
  */
 public class ChitChat {
     
-}
+} 
