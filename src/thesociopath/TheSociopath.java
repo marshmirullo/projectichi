@@ -27,7 +27,7 @@ public class TheSociopath{
                 students.addEdge(studentsID[i], studentsID[b], c);
                 students.addEdge(studentsID[b], studentsID[i], d);
                 rep[b]+=c;
-                rep[i]+=d;
+                rep[i]+=d; 
             }
         }
         System.out.println("Student and list of friends : \n");
