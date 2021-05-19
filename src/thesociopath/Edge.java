@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package thesociopath;
 
-import java.util.ArrayList;
 
-/**
- *
- * @author USER
- */
-public class Edge<T extends Comparable<T>, N extends Comparable<N>>{
-   Vertex<T,N> toVertex;
+public class Edge<T extends Comparable<T>, N extends Comparable <N>> {
+    
+	Vertex<T,N> toVertex;
 	N weight;
 	Edge<T,N> nextEdge;
 	
@@ -28,4 +19,10 @@ public class Edge<T extends Comparable<T>, N extends Comparable<N>>{
 		nextEdge = a;
 	}
 
-} 
+        public void setWeight(N weight) {
+            this.weight = weight;
+        }
+        
+        
+
+}
