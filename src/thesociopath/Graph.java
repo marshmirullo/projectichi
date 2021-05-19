@@ -81,6 +81,20 @@ public class Graph<T extends Comparable<T>> {
          return false;
    }
    
+   public void editVertexInfo(T v, T newID){
+       if(hasVertex(v)){
+           Vertex<T,Integer> temp = head;
+           while(temp!=null){
+               if(temp.vertexInfo.compareTo(v)==0){
+                   temp.vertexInfo = newID;
+               }
+               temp = temp.nextVertex;
+           }
+       }
+       else
+            System.out.println("There is no vertex " + v + " in the graph.");
+   }
+   
    public int getIndex(T v) {
       Vertex<T,Integer> temp = head;
       int pos=0;
@@ -288,8 +302,9 @@ public class Graph<T extends Comparable<T>> {
    public void printEdges()   {
       Vertex<T,Integer> temp=head;
       while (temp!=null) {
-         System.out.println("-------------------------#Student " + temp.vertexInfo + "-------------------------" );
+         System.out.println("-------------------------#" + temp.vertexInfo + "-------------------------" );
          System.out.println("Diving Rate = " + temp.dive + ", Lunch Time = " + temp.lunchStart + ", Lunch Period = " + temp.lunchPeriod);
+         System.out.println("Current reputation point = " + getRep(temp.vertexInfo));
          Edge<T,Integer> currentEdge = temp.firstEdge;
          System.out.println("List of friends with respective reputation point : ");
          while (currentEdge != null) {
@@ -299,6 +314,29 @@ public class Graph<T extends Comparable<T>> {
          System.out.println("\n\n");
          temp=temp.nextVertex;
       }  
+   }
+   
+   public void printSpecificEdges(T v){
+       if(!hasVertex(v)){
+           System.out.println("Vertex " + v + " cannot be found!");
+       }
+       else{
+           Vertex<T,Integer> temp = head;
+           while(temp!=null){
+               if(temp.vertexInfo.compareTo(v)==0){
+                   System.out.println("Current reputation point = " + getRep(v));
+                   System.out.println("Diving Rate = " + temp.dive + ", Lunch Time = " + temp.lunchStart + ", Lunch Period = " + temp.lunchPeriod);
+                   Edge<T,Integer> currentEdge = temp.firstEdge;
+                   System.out.println("List of friends with respective reputation point : ");
+                   while (currentEdge != null) {
+                        System.out.print(" ---> " + currentEdge.toVertex.vertexInfo + "(" + currentEdge.weight + "), " );
+                        currentEdge=currentEdge.nextEdge;
+                    }
+                   System.out.println("\n\n");                   
+               }
+               temp=temp.nextVertex;
+           }
+       }
    }
    
    public String Study(T source,T destination,int rate){
