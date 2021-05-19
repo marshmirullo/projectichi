@@ -2,11 +2,14 @@ package thesociopath;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Graph<T extends Comparable<T>> {
    Vertex<T,Integer> head;
    int size;
+   
+   Random r = new Random();
 	
    public Graph(){
       head=null;
@@ -297,6 +300,43 @@ public class Graph<T extends Comparable<T>> {
          temp=temp.nextVertex;
       }  
    }
+   
+   public String Study(T source,T destination,int rate){
+        if (head==null)
+           System.out.println("The graph is  empty...");
+        if (!hasVertex(source) || !hasVertex(destination)) 
+           System.out.println("There is no vertex " + source + " or " + destination + " in the graph");
+        if(!hasEdge(source,destination)){
+            Vertex<T,Integer> sourceVertex = head;
+            while (sourceVertex!=null)	{
+            if ( sourceVertex.vertexInfo.compareTo( source ) == 0 )   {
+            // Reached source vertex, look for destination now
+            Vertex<T,Integer> destinationVertex = head;
+            while (destinationVertex!=null)	{
+                if ( destinationVertex.vertexInfo.compareTo( destination ) == 0 )   {
+                    int a = r.nextInt(10)+1;
+                    if(rate==1){
+                        addEdge(destination,source,10);
+                        addEdge(source,destination,a);
+                    }
+                    if(rate==0){
+                        addEdge(destination,source,2);
+                        addEdge(source,destination,a);
+                    }
+                    return "Event 1 (teaching a stranger) is complete!";
+               }
+               destinationVertex=destinationVertex.nextVertex;
+            }
+         }
+         sourceVertex=sourceVertex.nextVertex;
+           }
+        }
+        else{
+            return "Event 1 (teaching a stranger) is only for stranger. " + source + " and " + destination + " are already friend.";
+        }
+        return "Event 1 (teaching a stranger) failed!";
+        
+       
+   }
 
 }
-
