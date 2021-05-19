@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class TheSociopath{
-
+public class TheSociopath {
+    
     static char[] studentsID = {'A','B','C','D','E','F','G','H','I','J'};
-    static int[] rep = new int[10];
-
+   
     public static void main(String[] args) {
-        Graph<Character,Integer> students = new Graph<>();
+        Graph<Character> students = new Graph<>();
         for(char a : studentsID)
             students.addVertex(a);
         Random r = new Random();
@@ -26,16 +25,14 @@ public class TheSociopath{
                 check.add(b);
                 students.addEdge(studentsID[i], studentsID[b], c);
                 students.addEdge(studentsID[b], studentsID[i], d);
-                rep[b]+=c;
-                rep[i]+=d; 
             }
         }
         System.out.println("Student and list of friends : \n");
         students.printEdges();
         System.out.println("\nCurrent reputation point of students : ");
         for(int i=0;i<studentsID.length;i++){
-            System.out.println("#Student " + studentsID[i] + " : " + rep[i]);
+            System.out.println("#Student " + studentsID[i] + " : " + students.getRep(studentsID[i]));
         }
     }
-
+    
 }
