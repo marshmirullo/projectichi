@@ -8,6 +8,7 @@ public class Vertex<T extends Comparable<T>, N extends Comparable <N>> {
    Random r = new Random();
 
    T vertexInfo;
+   int rep=0;
    int lunchStart; 
    int lunchPeriod;
    int dive;
@@ -33,7 +34,7 @@ public class Vertex<T extends Comparable<T>, N extends Comparable <N>> {
       lunchStart = generateRandomTime();
       dive = r.nextInt(99)+1;
       int a = r.nextInt(60+1-5)+5;
-      int afterPeriod = a + lunchStart; 
+      int afterPeriod = a + lunchStart;
       if(afterPeriod>1360){
           lunchPeriod = 1360 - lunchStart;
       }
@@ -60,5 +61,10 @@ public class Vertex<T extends Comparable<T>, N extends Comparable <N>> {
                break;
        }
        return a;
+   }
+   
+   public int totalRep(int a){
+       rep = rep + a;
+       return rep;
    }
 }
