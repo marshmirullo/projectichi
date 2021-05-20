@@ -244,6 +244,17 @@ public class Graph<T extends Comparable<T>> {
       return false;
    }
    
+   public void getNotFriendsList(T v){
+       ArrayList<T> list = new ArrayList<>();
+       Vertex<T,Integer> current = head;
+       while(current!=null){
+           if(!hasEdge(v,current.vertexInfo)&&!v.equals(current.vertexInfo))
+               list.add(current.vertexInfo);
+           current = current.nextVertex;
+       }
+       System.out.println(list);
+   }
+   
    public int getEdgeWeight(T source, T destination) {
       int notFound=0;
       if (head==null)
@@ -378,3 +389,4 @@ public class Graph<T extends Comparable<T>> {
    }
 
 }
+
