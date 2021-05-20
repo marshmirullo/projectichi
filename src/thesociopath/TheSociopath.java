@@ -82,7 +82,78 @@ public class TheSociopath {
                     break;
                 }
                 case 5:{
-                    System.out.println("In construction...");
+                    System.out.println("***WELCOME TO THE EVENTS!!!***\n\n");
+                    System.out.println("Events available are as below: \n");
+                    System.out.println("Event 1: Teaching a stranger to solve lab question");
+                    System.out.println("Event 2: Chit-Chat");
+                    System.out.println("Event 3: Your road to glory(lunch with friends)");
+                    System.out.println("Event 4: Arranging books");
+                    System.out.println("Event 5: Meet your crush");
+                    System.out.println("Event 6: Build new friendship\n");
+                    System.out.print("Please choose any option available to continue. Enter respective number below: ");
+                    int select = s.nextInt();
+                    switch(select){
+                        case 1:{
+                            System.out.println("----------Event 1----------");
+                            System.out.println("\nIn this event, you will teach a stranger about lab question. Please choose any stranger you want to be friend with by looking at the list below: ");
+                            students.getNotFriendsList(studentsID[0]);
+                            System.out.print("Enter student ID: ");
+                            s.nextLine();
+                            String name = s.nextLine();
+                            System.out.println("\nFor this event, you need to answer some true/false question from your friend. In order to get good impression from your new friend, you need to get at least 3 correct answer from total of 5 questions.");
+                            System.out.println("Please enter true or false for each statement.\n\n");
+                            int sum=0;
+                            Boolean question=false;
+                            System.out.print("#Q1) Generics enable errors to be detected at compile time rather than at runtime: ");
+                            question = s.nextBoolean();
+                            if(question)
+                                sum+=1;
+                            System.out.print("\n#Q2) Stack holds data in a first-in,first-out(FIFO) style: ");
+                            question = s.nextBoolean();
+                            if(!question)
+                                sum+=1;
+                            System.out.print("\n#Q3) In queue data structure, method 'enqueue()' will delete the first element: ");
+                            question = s.nextBoolean();
+                            if(!question)
+                                sum+=1;
+                            System.out.print("\n#Q4) For graph, vertices can be represented with Array,ArrayList or Linked-list: ");
+                            question = s.nextBoolean();
+                            if(question)
+                                sum+=1;
+                            System.out.print("\n#Q5) Integer and Boolean are primitive data type while String and Array are reference data type: ");
+                            question = s.nextBoolean();
+                            if(question)
+                                sum+=1;
+                            System.out.println("\nCongratulation! You managed to help your friend with the questions. From 5 questions, you get " + sum + " correct answer!\n");
+                            if(sum>=3)
+                                students.Study(studentsID[0], name, 1);
+                            else
+                                students.Study(studentsID[0], name, 0);
+                            break;
+                        }
+                        case 2:{
+                            System.out.println("");
+                            break;
+                        }
+                        case 3:{
+                            System.out.println("");
+                            break;
+                        }
+                        case 4:{
+                            System.out.println("");
+                            break;
+                        }
+                        case 5:{
+                            System.out.println("");
+                            break;
+                        }
+                        case 6:{
+                            System.out.println("");
+                            break;
+                        }
+                        default:
+                            System.out.println("Number entered is wrong...");
+                    }
                     break;
                 }
                 case 0:
@@ -103,3 +174,4 @@ public class TheSociopath {
     }
     
 }
+
