@@ -82,11 +82,11 @@ public class TheSociopath {
                     break;
                 }
                 case 5:{
-                    System.out.println("***WELCOME TO THE EVENTS!!!***\n\n");
+                    System.out.println("\n\n***WELCOME TO THE EVENTS!!!***\n\n");
                     System.out.println("Events available are as below: \n");
                     System.out.println("Event 1: Teaching a stranger to solve lab question");
                     System.out.println("Event 2: Chit-Chat");
-                    System.out.println("Event 3: Your road to glory(lunch with friends)");
+                    System.out.println("Event 3: Lunch with friends");
                     System.out.println("Event 4: Arranging books");
                     System.out.println("Event 5: Meet your crush");
                     System.out.println("Event 6: Build new friendship\n");
