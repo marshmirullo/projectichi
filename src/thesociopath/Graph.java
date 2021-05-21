@@ -3,6 +3,7 @@ package thesociopath;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class Graph<T extends Comparable<T>> {
@@ -10,6 +11,7 @@ public class Graph<T extends Comparable<T>> {
    int size;
    
    Random r = new Random();
+   Scanner s = new Scanner(System.in);
 	
    public Graph(){
       head=null;
@@ -350,7 +352,7 @@ public class Graph<T extends Comparable<T>> {
        }
    }
    
-   public String Study(T source,T destination,int rate){
+   public String event1(T source,T destination,int rate){
         if (head==null)
            System.out.println("The graph is  empty...");
         if (!hasVertex(source) || !hasVertex(destination)) 
@@ -387,6 +389,144 @@ public class Graph<T extends Comparable<T>> {
         
        
    }
-
+   
+   public void event3(T v){
+       Vertex<T,Integer> current = head;
+       int lunchperiodleft = 0;
+       ArrayList<T> list = new ArrayList<>();
+       while(current!=null){
+           if(current.vertexInfo.compareTo(v)==0){
+               int lunchEndTime = TimeGenerator(current.lunchPeriod,current.lunchStart);
+               lunchperiodleft = current.lunchPeriod;
+               System.out.println("Your lunch time interval: " + current.lunchStart + " - " + lunchEndTime + "\n");
+               Vertex<T,Integer> destination = head;
+               int i=1;
+               while(destination!=null){
+                   if(destination.vertexInfo.compareTo(v)==0){
+                       destination = destination.nextVertex;
+                       continue;
+                   }
+                   int a = TimeGenerator(destination.lunchPeriod ,destination.lunchStart); //lunch end time for destination vertex
+                   if(lunchEndTime>destination.lunchStart&&current.lunchStart<destination.lunchStart){
+                       list.add(destination.vertexInfo);
+                       destination = destination.nextVertex;
+                       i+=1;
+                       continue;
+                   }
+                   if(current.lunchStart<a&&current.lunchStart>destination.lunchStart){
+                       list.add(destination.vertexInfo);
+                       destination = destination.nextVertex;
+                       i+=1;
+                       continue;
+                   }
+                   if(destination.lunchStart>=current.lunchStart&&lunchEndTime>=a){
+                       list.add(destination.vertexInfo);
+                       destination = destination.nextVertex;
+                       i+=1;
+                       continue;
+                   }
+                   if(current.lunchStart>=destination.lunchStart&&a>=lunchEndTime){
+                       list.add(destination.vertexInfo);
+                       destination = destination.nextVertex;
+                       i+=1;
+                       continue;
+                   }
+                   destination = destination.nextVertex;
+               }
+               break;
+           }
+           current = current.nextVertex;
+       }
+       int timeavailable = current.lunchStart;
+       while(true){
+           if(list.isEmpty()){
+               System.out.println("The list is empty. You do not have any friends available to have lunch with.\n");
+               break;
+           }
+           if(lunchperiodleft<=0){
+               System.out.println("At the moment, you do not have any lunch period left.\n");
+               break;
+           }
+           System.out.println("\nCurrent lunch period left: " + lunchperiodleft);
+           System.out.println("\nList of student with their free lunch time available: \n");
+           for(int i=0;i<list.size();i++){
+               System.out.print((i+1) + ") " + list.get(i) + ": ");
+               TimeIntervalGenerator(current.vertexInfo,list.get(i));
+           }
+           System.out.print("\nChoose any of the person above to have lunch with. Enter the number of the person: ");
+           int select = s.nextInt();
+           Vertex<T,Integer> temp = head;
+           while(temp!=null){
+               if(temp.vertexInfo.compareTo(list.get(select-1))==0){
+                   System.out.println(list.get(select-1) + ": " + temp.lunchStart + " - " + TimeGenerator(temp.lunchPeriod,temp.lunchStart));
+                   System.out.print("\nTime interval available to have lunch together: ");
+                   TimeIntervalGenerator(current.vertexInfo,temp.vertexInfo);
+                   System.out.print("\nHow many minutes do you want to spend lunch together?: ");
+                   int duration = s.nextInt();
+                   while(duration>temp.lunchPeriod){
+                       System.out.print("The time entered exceed " + list.get(select-1) + " lunch time. Please enter one more time: ");
+                       duration = s.nextInt();
+                   }
+                   lunchperiodleft-=duration;
+                   System.out.println("\nYou have spend " + duration + " minutes with " + list.get(select-1) + ". Your reputation point will increase by 1.");
+                   timeavailable = TimeGenerator(timeavailable,duration);
+                   if(timeavailable==TimeGenerator(current.lunchStart,current.lunchPeriod))
+                       break;
+                   System.out.println("\nCurrent free time interval: " + timeavailable + " - " + TimeGenerator(current.lunchStart,current.lunchPeriod));
+                   list.remove(select-1);
+                   break;
+               }
+               temp = temp.nextVertex;
+           }          
+           System.out.print("\nDo you want to spend your lunch with another person? Enter any number to continue and 0 to exit: ");
+           int exit = s.nextInt();
+           if(exit==0)
+               break;           
+       }      
+   }
+   
+   public void TimeIntervalGenerator(T a,T b){
+       Vertex<T,Integer> vertex1 = head;
+       Vertex<T,Integer> vertex2 = head;
+       while(vertex1!=null){
+           if(vertex1.vertexInfo.compareTo(a)==0)
+               break;
+           vertex1 = vertex1.nextVertex;
+       }
+       while(vertex2!=null){
+           if(vertex2.vertexInfo.compareTo(b)==0)
+               break;
+           vertex2 = vertex2.nextVertex;
+       }
+       int lunchEndTime_1 = TimeGenerator(vertex1.lunchStart,vertex1.lunchPeriod);
+       int lunchEndTime_2 = TimeGenerator(vertex2.lunchStart,vertex2.lunchPeriod);
+       if(lunchEndTime_1>vertex2.lunchStart&&vertex1.lunchStart<vertex2.lunchStart){
+           System.out.println(vertex2.lunchStart + " - " + lunchEndTime_1);
+       }
+       else if(vertex1.lunchStart<lunchEndTime_2&&vertex2.lunchStart<vertex1.lunchStart){
+           System.out.println(vertex1.lunchStart + " - " + lunchEndTime_2);
+       }
+       else if(vertex2.lunchStart>=vertex1.lunchStart&&lunchEndTime_1>=lunchEndTime_2){
+           System.out.println(vertex2.lunchStart + " - " + lunchEndTime_2);
+       }
+       else if(vertex1.lunchStart>=vertex2.lunchStart&&lunchEndTime_2>=lunchEndTime_1){
+           System.out.println(vertex1.lunchStart + " - " + lunchEndTime_1);
+       }
+       else
+           System.out.println("Error!");
+       
+   }
+   
+   public int TimeGenerator(int a,int b){
+       int sum = a + b;
+       if(sum%100>=60){
+           return (sum+100)-60;
+       }
+       else if(sum%100==0){
+           int temp = 60 - (a%100);
+           return sum + (b-temp);
+       }
+       else
+           return sum;
+   }
 }
-
