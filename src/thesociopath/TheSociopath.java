@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class TheSociopath {
     
-    static String[] studentsID = {null,"Mustafa","Zhongli","Silva","Asta","Viraj","Ryujin","Ivan","Charlotte","Nafisa"};
+    static String[] studentsID = {null,"Arjuna","Zhongli","Silva","Asta","Viraj","Ryujin","Ivan","Charlotte","Nafisa"};
    
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
@@ -90,11 +90,11 @@ public class TheSociopath {
                     System.out.println("Event 4: Arranging books");
                     System.out.println("Event 5: Meet your crush");
                     System.out.println("Event 6: Build new friendship\n");
-                    System.out.print("Please choose any option available to continue. Enter respective number below: ");
+                    System.out.print("Please choose any option available to continue. Enter respective number of the event: ");
                     int select = s.nextInt();
                     switch(select){
                         case 1:{
-                            System.out.println("----------Event 1----------");
+                            System.out.println("\n\n----------Event 1----------");
                             System.out.println("\nIn this event, you will teach a stranger about lab question. Please choose any stranger you want to be friend with by looking at the list below: ");
                             students.getNotFriendsList(studentsID[0]);
                             System.out.print("Enter student ID: ");
@@ -126,29 +126,35 @@ public class TheSociopath {
                                 sum+=1;
                             System.out.println("\nCongratulation! You managed to help your friend with the questions. From 5 questions, you get " + sum + " correct answer!\n");
                             if(sum>=3)
-                                students.Study(studentsID[0], name, 1);
+                                students.event1(studentsID[0], name, 1);
                             else
-                                students.Study(studentsID[0], name, 0);
+                                students.event1(studentsID[0], name, 0);
                             break;
                         }
                         case 2:{
-                            System.out.println("");
+                            System.out.println("\n\n----------Event 2----------");
                             break;
                         }
                         case 3:{
-                            System.out.println("");
+                            System.out.println("\n\n----------Event 3----------");
+                            System.out.println("\nIn this event, you can choose any friends or strangers to have lunch together. The details of this event are as below: \n");
+                            System.out.println("*you can only have lunch with one person at one time");
+                            System.out.println("*the minimum time duration spend for each lunch is 5 minutes");
+                            System.out.println("*you can only have lunch with a person if you both have the same lunch period\n");
+                            System.out.println("List of students with their lunch time interval: \n");                            
+                            students.event3(studentsID[0]);
                             break;
                         }
                         case 4:{
-                            System.out.println("");
+                            System.out.println("----------Event 4----------");
                             break;
                         }
                         case 5:{
-                            System.out.println("");
+                            System.out.println("----------Event 5----------");
                             break;
                         }
                         case 6:{
-                            System.out.println("");
+                            System.out.println("----------Event 6----------");
                             break;
                         }
                         default:
@@ -174,4 +180,3 @@ public class TheSociopath {
     }
     
 }
-
