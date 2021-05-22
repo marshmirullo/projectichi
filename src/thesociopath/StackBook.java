@@ -7,8 +7,6 @@ package thesociopath;
 
 import java.util.EmptyStackException;
 
-import java.util.EmptyStackException;
-
 /**
  *
  * @author USER
