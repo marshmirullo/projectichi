@@ -388,11 +388,11 @@ public class Graph<T extends Comparable<T>> {
        }
    }
    
-   public String event1(T source,T destination,int rate){
+   public void event1(T source,T destination){        
         if (head==null)
            System.out.println("The graph is  empty...");
         if (!hasVertex(source) || !hasVertex(destination)) 
-           System.out.println("There is no vertex " + source + " or " + destination + " in the graph");
+           System.out.println("There is no vertex " + destination + " in the graph");
         if(!hasEdge(source,destination)){
             Vertex<T,Integer> sourceVertex = head;
             while (sourceVertex!=null)	{
@@ -401,6 +401,37 @@ public class Graph<T extends Comparable<T>> {
             Vertex<T,Integer> destinationVertex = head;
             while (destinationVertex!=null)	{
                 if ( destinationVertex.vertexInfo.compareTo( destination ) == 0 )   {
+                    int sum=0;
+                    
+                            Boolean question=false;
+                            System.out.println("\n\nLET'S START!!!\n");
+                            System.out.print("\n#Q1) Generics enable errors to be detected at compile time rather than at runtime: ");
+                            question = s.nextBoolean();
+                            if(question)
+                                sum+=1;
+                            System.out.print("\n#Q2) Stack holds data in a first-in,first-out(FIFO) style: ");
+                            question = s.nextBoolean();
+                            if(!question)
+                                sum+=1;
+                            System.out.print("\n#Q3) In queue data structure, method 'enqueue()' will delete the first element: ");
+                            question = s.nextBoolean();
+                            if(!question)
+                                sum+=1;
+                            System.out.print("\n#Q4) For graph, vertices can be represented with Array,ArrayList or Linked-list: ");
+                            question = s.nextBoolean();
+                            if(question)
+                                sum+=1;
+                            System.out.print("\n#Q5) Integer and Boolean are primitive data type while String and Array are reference data type: ");
+                            question = s.nextBoolean();
+                            if(question)
+                                sum+=1;
+                            System.out.println("\nCongratulation! You managed to help your friend with the questions. From 5 questions, you get " + sum + " correct answer!\n");
+                        
+                    int rate = 0;
+                    if(sum>2)
+                        rate = 1;
+                    if(sum<=2)
+                        rate = 0;                    
                     int a = r.nextInt(10)+1;
                     if(rate==1){
                         addEdge(destination,source,10);
@@ -410,20 +441,14 @@ public class Graph<T extends Comparable<T>> {
                         addEdge(destination,source,2);
                         addEdge(source,destination,a);
                     }
-                    return "Event 1 (teaching a stranger) is complete!";
+                    System.out.println("Event 1 (teaching a stranger) is complete!\n");
                }
                destinationVertex=destinationVertex.nextVertex;
             }
          }
          sourceVertex=sourceVertex.nextVertex;
            }
-        }
-        else{
-            return "Event 1 (teaching a stranger) is only for stranger. " + source + " and " + destination + " are already friend.";
-        }
-        return "Event 1 (teaching a stranger) failed!";
-        
-       
+        }       
    }
    
    public void event3(T v){
