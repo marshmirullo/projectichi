@@ -95,40 +95,28 @@ public class TheSociopath {
                     switch(select){
                         case 1:{
                             System.out.println("\n\n----------Event 1----------");
-                            System.out.println("\nIn this event, you will teach a stranger about lab question. Please choose any stranger you want to be friend with by looking at the list below: ");
-                            students.getNotFriendsList(studentsID[0]);
-                            System.out.print("Enter student ID: ");
-                            s.nextLine();
-                            String name = s.nextLine();
-                            System.out.println("\nFor this event, you need to answer some true/false question from your friend. In order to get good impression from your new friend, you need to get at least 3 correct answer from total of 5 questions.");
-                            System.out.println("Please enter true or false for each statement.\n\n");
-                            int sum=0;
-                            Boolean question=false;
-                            System.out.print("#Q1) Generics enable errors to be detected at compile time rather than at runtime: ");
-                            question = s.nextBoolean();
-                            if(question)
-                                sum+=1;
-                            System.out.print("\n#Q2) Stack holds data in a first-in,first-out(FIFO) style: ");
-                            question = s.nextBoolean();
-                            if(!question)
-                                sum+=1;
-                            System.out.print("\n#Q3) In queue data structure, method 'enqueue()' will delete the first element: ");
-                            question = s.nextBoolean();
-                            if(!question)
-                                sum+=1;
-                            System.out.print("\n#Q4) For graph, vertices can be represented with Array,ArrayList or Linked-list: ");
-                            question = s.nextBoolean();
-                            if(question)
-                                sum+=1;
-                            System.out.print("\n#Q5) Integer and Boolean are primitive data type while String and Array are reference data type: ");
-                            question = s.nextBoolean();
-                            if(question)
-                                sum+=1;
-                            System.out.println("\nCongratulation! You managed to help your friend with the questions. From 5 questions, you get " + sum + " correct answer!\n");
-                            if(sum>=3)
-                                students.event1(studentsID[0], name, 1);
-                            else
-                                students.event1(studentsID[0], name, 0);
+                            System.out.println("\nIn this event, you will teach a stranger about lab questions. You need to answer some true/false question from your friend.\n");
+                            System.out.println("*please enter true or false for each statement");
+                            System.out.println("*there are 5 question in total");
+                            System.out.println("*to get good impression from your new friend, you need to get at least 3 correct answer");
+                            System.out.println("*at least 3/5 = 10 reputation point");
+                            System.out.println("*2/5 and below = 2 reputation point\n\n");
+                            while(true){
+                                System.out.println("Please choose any stranger you want to be friend with by looking at the list below: ");
+                                students.getNotFriendsList(studentsID[0]);
+                                System.out.print("Enter student ID: ");
+                                s.nextLine();
+                                String name = s.nextLine();
+                                while(!students.hasVertex(name)){
+                                    System.out.print("\nVertex inserted is not available. Please enter one more time: ");
+                                    name = s.nextLine();
+                                }
+                                students.event1(studentsID[0], name);
+                                System.out.print("Enter any number to teach other stranger or '0' to exit from event 1: ");
+                                int a = s.nextInt();
+                                if(a==0)
+                                    break;
+                            }
                             break;
                         }
                         case 2:{
@@ -158,7 +146,7 @@ public class TheSociopath {
                             break;
                         }
                         default:
-                            System.out.println("Number entered is wrong...");
+                            System.out.println("Number entered is wrong.");
                     }
                     break;
                 }
@@ -168,9 +156,9 @@ public class TheSociopath {
                     break;
                 }
                 default:
-                    System.out.println("Please enter the right option number.");                
+                    System.out.println("\nPlease enter the right option number.");                
             }
-            System.out.print("Do you want to continue with other option? Enter any number to continue and '0' to exit: ");
+            System.out.print("\nDo you want to continue with other option? Enter any number to continue and '0' to exit: ");
             int exit = s.nextInt();
             if(exit==0){
                 test = false;
