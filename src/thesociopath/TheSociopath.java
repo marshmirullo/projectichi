@@ -103,12 +103,13 @@ public class TheSociopath {
                             System.out.println("*2/5 and below = 2 reputation point\n\n");
                             while(true){
                                 System.out.println("Please choose any stranger you want to be friend with by looking at the list below: ");
-                                students.getNotFriendsList(studentsID[0]);
+                                ArrayList<String> list = students.getNotFriendsList(studentsID[0]);
+                                System.out.println(list);
                                 System.out.print("Enter student ID: ");
                                 s.nextLine();
                                 String name = s.nextLine();
-                                while(!students.hasVertex(name)){
-                                    System.out.print("\nVertex inserted is not available. Please enter one more time: ");
+                                while(!students.hasVertex(name)&&!list.contains(name)){
+                                    System.out.print("\nName inserted is not available. Please enter one more time: ");
                                     name = s.nextLine();
                                 }
                                 students.event1(studentsID[0], name);
@@ -117,10 +118,23 @@ public class TheSociopath {
                                 if(a==0)
                                     break;
                             }
+                            System.out.println("\n\nEvent 1 completed!\n\n");
                             break;
                         }
                         case 2:{
+                            int oldRep = students.getRep(studentsID[0]);
                             System.out.println("\n\n----------Event 2----------");
+                            System.out.println("\nIn this event, everyone will have a chit-chatting session with their friends. The details of this event are as below: \n");
+                            System.out.println("*please be aware that your friends chit-chatting session will affect your reputation points");
+                            System.out.println("*your reputation point is not the only one that will be affected, all the reputation point of the students will be manipulated in this event");
+                            System.out.println("*if the chit-chatting session is something good about you: your reputation point relative to new friend will be 50% of your old friend");
+                            System.out.println("*if the chit-chatting session is something bad about you: your reputation point relative to new friend will be -100% of your old friend");
+                            students.event2(studentsID[0]);
+                            if(students.getRep(studentsID[0])<oldRep)
+                                System.out.println("\nOh no! Your reputation point is decreased. There must be some students who talk something bad about you.");
+                            if(students.getRep(studentsID[0])>oldRep)
+                                System.out.println("\nYour reputation point is increased! There must be some students who talk something good about you.");
+                            System.out.println("\n\nEvent 2 completed!\n\n");
                             break;
                         }
                         case 3:{
@@ -131,6 +145,7 @@ public class TheSociopath {
                             System.out.println("*you can only have lunch with a person if you both have the same lunch period\n");
                             System.out.println("List of students with their lunch time interval: \n");                            
                             students.event3(studentsID[0]);
+                            System.out.println("\n\nEvent 3 completed!\n\n");
                             break;
                         }
                         case 4:{
@@ -146,7 +161,7 @@ public class TheSociopath {
                             break;
                         }
                         default:
-                            System.out.println("Number entered is wrong.");
+                            System.out.println("Number entered is wrong...");
                     }
                     break;
                 }
