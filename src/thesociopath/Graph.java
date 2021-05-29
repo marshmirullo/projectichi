@@ -208,6 +208,7 @@ public class Graph<T extends Comparable<T>> {
                destinationVertex.totalRep(-w);
                break;
            }
+           destinationVertex = destinationVertex.nextVertex;
        }
        while(sourceVertex!=null){
            if(sourceVertex.vertexInfo.compareTo(source)==0){
@@ -254,7 +255,7 @@ public class Graph<T extends Comparable<T>> {
       return false;
    }
    
-   public void getNotFriendsList(T v){
+   public ArrayList<T> getNotFriendsList(T v){
        ArrayList<T> list = new ArrayList<>();
        Vertex<T,Integer> current = head;
        while(current!=null){
@@ -262,7 +263,18 @@ public class Graph<T extends Comparable<T>> {
                list.add(current.vertexInfo);
            current = current.nextVertex;
        }
-       System.out.println(list);
+       return list;
+   }
+   
+   public ArrayList<T> getFriendsList(T v){
+       ArrayList<T> list = new ArrayList<>();
+       Vertex<T,Integer> current = head;
+       while(current!=null){
+           if(hasEdge(v,current.vertexInfo)&&!v.equals(current.vertexInfo))
+               list.add(current.vertexInfo);
+           current = current.nextVertex;
+       }
+       return list;
    }
    
    public int getEdgeWeight(T source, T destination) {
@@ -271,6 +283,9 @@ public class Graph<T extends Comparable<T>> {
          return notFound;
       if (!hasVertex(source) || !hasVertex(destination)) 
          return notFound;
+      if(!hasEdge(source,destination)){
+          return notFound;
+      }
       Vertex<T,Integer> sourceVertex = head;
       while (sourceVertex!=null)	{
          if ( sourceVertex.vertexInfo.compareTo( source ) == 0 )   {
@@ -290,12 +305,13 @@ public class Graph<T extends Comparable<T>> {
    
    public void changeEdgeWeight(T source,T destination,int a){
       if (head==null)
-           System.out.println("Error!");;
+           System.out.println("Error!");
       if (!hasVertex(source) || !hasVertex(destination)) 
            System.out.println("Error!");
       if(!hasEdge(source,destination)){
           addEdge(source,destination,a);
           addEdge(destination,source,a);
+          return;
       }
       Vertex<T,Integer> sourceVertex = head;
       int w = getEdgeWeight(source,destination);
@@ -451,6 +467,140 @@ public class Graph<T extends Comparable<T>> {
         }       
    }
    
+   public void event2(T v){
+       Vertex<T,Integer> current = head;
+       while(current!=null){
+           if(current.vertexInfo.equals(v)){
+               ArrayList<T> list = getFriendsList(v);
+               if(list.size()==1){
+                   System.out.println("You only have one friend. You cannot continue in this chit-chatting session.");
+                   break;
+               }
+               while(true){                    
+                    System.out.println("This is your current friends list: " + list);
+                    System.out.print("Choose any friend you would like to have chit-chat with. Enter the name here: ");
+                    String name = s.nextLine();
+                    while(!list.contains(name)){
+                        System.out.print("Name entered is not in your friends list. Please enter one more time: ");
+                        name = s.nextLine();
+                    }
+                    System.out.println("You will have your chit-chatting session with " + name + ". During the session, you will talk about your other friends with " + name + ".");
+                    System.out.println("For reminder, this session will only affect your friends reputation point. Your reputation point will remain the same.");
+                    System.out.print("Choose your other friend that you want to bring into the conversation: ");
+                    String name2 = s.nextLine();
+                    while(name.equals(name2)||!list.contains(name2)){
+                        if(name.equals(name2)){
+                            System.out.print("You cannot enter the same name. Please choose other friends: ");
+                            name2 = s.nextLine();
+                            continue;
+                        }
+                        if(!list.contains(name2)){
+                            System.out.print("Name entered is not available in your friend list. Please enter one more time: ");
+                            name2 = s.nextLine();
+                            continue;
+                        }                      
+                    }
+                    System.out.println("You will be talking about " + name2 + " with " + name + ".");
+                    Vertex<T,Integer> temp2 = head;
+                    while(temp2!=null){
+                        if(temp2.vertexInfo.equals(name2)){
+                            Vertex<T,Integer> temp = head;
+                            while(temp!=null){
+                                if(temp.vertexInfo.equals(name)){
+                                    System.out.println("These are relative reputation point of you and " + name2);
+                                    System.out.println("Your reputation point relative to " + name2 + ": " + getEdgeWeight(temp2.vertexInfo,v));
+                                    System.out.println(name2 + " reputation point relative to you: " + getEdgeWeight(v,temp2.vertexInfo));
+                                    System.out.println("You can decide whether you want to talk about good or bad message about " + name2 + " in your conversation with " + name + ".");
+                                    System.out.print("Enter any number if you want to talk about good message and '0' for bad message: ");
+                                    int select = s.nextInt();
+                                    if(select==0){
+                                        System.out.println("You have decided to talk about bad message.");
+                                        int newRep = -(getEdgeWeight(current.vertexInfo,temp2.vertexInfo));
+                                        changeEdgeWeight(temp.vertexInfo,temp2.vertexInfo,newRep);
+                                        System.out.println("Because of your chit-chatting session, " + name2 + " reputation point relative to " + name + " will be " + newRep);                                        
+                                    }
+                                    else{
+                                        System.out.println("You have decided to talk about good message. What a nice person are you!");
+                                        int newRep = getEdgeWeight(current.vertexInfo,temp2.vertexInfo);
+                                        changeEdgeWeight(temp.vertexInfo,temp2.vertexInfo,(newRep/2)+(newRep%2));
+                                        System.out.println("Because of your chit-chatting session, " + name2 + " reputation point relative to " + name + " will be " + newRep);
+                                    }
+                                }
+                                temp = temp.nextVertex;
+                            }
+                        }
+                        temp2=temp2.nextVertex;
+                    }
+                    list.remove(name);
+                    list.remove(name2);
+                    System.out.print("Do you want to have another chit-chatting session? Enter any number to continue and '0' to exit: ");
+                    int select = s.nextInt();
+                    if(select==0)
+                        break;                   
+               }              
+           }
+           current = current.nextVertex;
+       }
+       System.out.println("\nChecking other students: \n");
+       Vertex<T,Integer> current2 = head;
+       while(current2!=null){ 
+            ArrayList<T> list = getFriendsList(current2.vertexInfo);
+            if(current2.vertexInfo.equals(v)){
+                current2 = current2.nextVertex;
+                continue;
+            }            
+            System.out.println("Checking " + current2.vertexInfo + " in Event 2.....");
+            if(list.size()<=1){
+                current2 = current2.nextVertex;
+                continue;  
+            }            
+            while(true){ 
+                int random = list.size();
+                int name = r.nextInt(random);
+                int name2 = r.nextInt(random);
+                while(true){                    
+                    if(name!=name2)
+                        break;
+                    name = r.nextInt(random);
+                    name2 = r.nextInt(random);
+                }      
+                Vertex<T,Integer> temp2 = head;
+                while(temp2!=null){
+                    if(temp2.vertexInfo.equals(list.get(name2))){
+                        Vertex<T,Integer> temp = head;
+                        while(temp!=null){
+                            if(temp.vertexInfo.equals(list.get(name))){
+                                int select = r.nextInt(2);
+                                if(select==0){
+                                    int newRep = -(getEdgeWeight(current2.vertexInfo,temp2.vertexInfo));
+                                    changeEdgeWeight(temp.vertexInfo,temp2.vertexInfo,newRep);                                       
+                                }
+                                else{
+                                    int newRep = getEdgeWeight(current2.vertexInfo,temp2.vertexInfo);
+                                    changeEdgeWeight(temp.vertexInfo,temp2.vertexInfo,(newRep/2)+(newRep%2));                    
+                                }
+                            }
+                            temp = temp.nextVertex;
+                        }
+                    }
+                    temp2=temp2.nextVertex;
+                }
+                T n1 = list.get(name);
+                T n2 = list.get(name2);
+                list.remove(n1);
+                list.remove(n2);
+                if(list.size()<=1)
+                    break;                
+                int select = r.nextInt(2);
+                if(select==0)
+                   break;                     
+            }                        
+            current2 = current2.nextVertex;
+        }
+    }
+   
+        
+   
    public void event3(T v){
        Vertex<T,Integer> current = head;
        int lunchperiodleft = 0;
@@ -556,9 +706,12 @@ public class Graph<T extends Comparable<T>> {
                    lunchperiodleft-=duration;
                    System.out.println("\nYou have spend " + duration + " minutes with " + list.get(select-1) + ". Your reputation point will increase by 1.");
                    timeavailable = TimeGenerator(timeavailable,duration);
-                   if(timeavailable==TimeGenerator(current.lunchStart,current.lunchPeriod))
-                       break;
-                   System.out.println("\nCurrent free time interval: " + timeavailable + " - " + TimeGenerator(current.lunchStart,current.lunchPeriod));
+                   if(timeavailable==TimeGenerator(current.lunchStart,current.lunchPeriod)){
+                       System.out.println("There is no free time left to have lunch.");
+                   }
+                   else{
+                        System.out.println("\nCurrent free time interval: " + timeavailable + " - " + TimeGenerator(current.lunchStart,current.lunchPeriod));
+                   }
                    list.remove(select-1);
                    list_lunchStart.remove(select-1);
                    list_lunchEnd.remove(select-1);
@@ -573,38 +726,6 @@ public class Graph<T extends Comparable<T>> {
            if(exit==0)
                break;           
        }      
-   }
-   
-   public void TimeIntervalGenerator(T a,T b){
-       Vertex<T,Integer> vertex1 = head;
-       Vertex<T,Integer> vertex2 = head;
-       while(vertex1!=null){
-           if(vertex1.vertexInfo.compareTo(a)==0)
-               break;
-           vertex1 = vertex1.nextVertex;
-       }
-       while(vertex2!=null){
-           if(vertex2.vertexInfo.compareTo(b)==0)
-               break;
-           vertex2 = vertex2.nextVertex;
-       }
-       int lunchEndTime_1 = TimeGenerator(vertex1.lunchStart,vertex1.lunchPeriod);
-       int lunchEndTime_2 = TimeGenerator(vertex2.lunchStart,vertex2.lunchPeriod);
-       if(lunchEndTime_1>vertex2.lunchStart&&vertex1.lunchStart<vertex2.lunchStart){
-           System.out.println(vertex2.lunchStart + " - " + lunchEndTime_1);
-       }
-       else if(vertex1.lunchStart<lunchEndTime_2&&vertex2.lunchStart<vertex1.lunchStart){
-           System.out.println(vertex1.lunchStart + " - " + lunchEndTime_2);
-       }
-       else if(vertex2.lunchStart>=vertex1.lunchStart&&lunchEndTime_1>=lunchEndTime_2){
-           System.out.println(vertex2.lunchStart + " - " + lunchEndTime_2);
-       }
-       else if(vertex1.lunchStart>=vertex2.lunchStart&&lunchEndTime_2>=lunchEndTime_1){
-           System.out.println(vertex1.lunchStart + " - " + lunchEndTime_1);
-       }
-       else
-           System.out.println("Error!");
-       
    }
    
    public int TimeGenerator(int a,int b){
