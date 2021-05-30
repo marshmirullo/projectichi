@@ -3,14 +3,16 @@ package thesociopath;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 
 
 public class TheSociopath {
     
     static String[] studentsID = {null,"Arjuna","Zhongli","Silva","Asta","Viraj","Ryujin","Ivan","Charlotte","Nafisa"};
-   
+
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
+        StackBook arrangeBook=new StackBook();
         System.out.println("---------------WELCOME TO THE SOCIOPATH---------------\n\n");
         System.out.print("Please enter your name for student ID: ");
         studentsID[0] = s.nextLine();
@@ -36,7 +38,7 @@ public class TheSociopath {
         System.out.println("\nDetails of your student ID are as below: ");
         students.printSpecificEdges(studentsID[0]);
         System.out.println("\n\nPlease choose any option available to continue. Enter the respective number below: \n");
-        Boolean test = true;
+        boolean test = true;
         while(test){
             System.out.println("1) Check current profile details.");
             System.out.println("2) Check profile of specific student ID.");
@@ -150,6 +152,8 @@ public class TheSociopath {
                         }
                         case 4:{
                             System.out.println("----------Event 4----------");
+                            arrangeBook.run();
+                            arrangeBook.output();
                             break;
                         }
                         case 5:{

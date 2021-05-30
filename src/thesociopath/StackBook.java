@@ -1,63 +1,57 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package thesociopath;
 
-import java.util.EmptyStackException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+/*Event 4
+Stacking books
+*/
+public class StackBook {
+    private LL<Integer> books = new LL<>();
+    private int numberOfBooks, heightOfBooks;
+    private int count=0;
+    boolean order=true;//order true indicate that there are books arranged in increasing order
 
-/**
- *
- * @author USER
- */
-public class StackBook<E> {
-    private java.util.ArrayList<E> list = new java.util.ArrayList<>();
-
-    public int getSize(){
-        return list.size();
-    }
-    
-    /*
-    public int get(){
-        return 
-    }
-    */
-    
-    public void push(E o){
-        list.add(o);
-    }
-    
-    public E pop(){
-        if(isEmpty())
-            throw new EmptyStackException();       
- 
-            E popped = list.get(getSize()-1);
-            list.remove(popped);
-        return popped;
-    }   
-    
-    public E peek(){
-        if(isEmpty())
-            throw new EmptyStackException();
+    public void run(){
+        Scanner s=new Scanner(System.in);
         
-        E peeked = list.get(getSize()-1);
-        return peeked;
+            System.out.println("Enter the number of books: ");
+            numberOfBooks=s.nextInt();
+            int i=0;
+            while(i<numberOfBooks){
+                try{
+                    System.out.printf("Enter the height of the book no. %d: \n", i+1);
+                    heightOfBooks=s.nextInt();
+                    books.add(heightOfBooks);
+                    i++;
+                }
+                catch (InputMismatchException | NumberFormatException ex ){
+                    System.out.println("Invalid input! You have to enter a number");
+                    s.next();
+                    continue;
+                }
+            }
+        arrange();
     }
-    
-    public boolean isEmpty(){
-        return list.isEmpty(); // arraylist library
+
+    public void arrange(){
+        while(order){
+            order=false;
+            for(int i=0; i<books.getSize()-1; i++){
+                if(books.get(i)<books.get(i+1)){
+                    books.remove(i+1);
+                    order=true;
+                }
+            }
+            count++;
+        }
+        count--;//because it will count +1 even after the order
     }
-    
-    public String toString(){
-        String out = "Stack :\n";
-        for (Object elems : list.toArray())
-            out += elems + "\n";
-        return out;
-    }
-    
-    public boolean search(E o){
-        return list.contains(o);
+
+    public void output(){
+        System.out.printf("You met librarian's request in %d round(s)\n",count);
+        System.out.print("The Height of the books: ");
+        books.print();
+
     }
 } 
 
