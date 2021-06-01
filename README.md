@@ -2,6 +2,5 @@
 
 deleted Event class
 
-
-event 3,5 and 6 not yet
+event6 not yet
 
