@@ -2,6 +2,7 @@ package thesociopath;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -137,6 +138,16 @@ public class Graph<T extends Comparable<T>> {
          temp=temp.nextVertex;
       return temp.vertexInfo;
    }
+   
+   public Vertex<T,Integer> getVertex(T v){
+       Vertex<T,Integer> current = head;
+       while(current!=null){
+           if(current.vertexInfo.equals(v))
+               return current;
+           current = current.nextVertex;
+       }
+       return null;
+   }
 
    public boolean addEdge(T source, T destination, int w)   {
       if (head==null)
@@ -266,12 +277,34 @@ public class Graph<T extends Comparable<T>> {
        return list;
    }
    
+   public ArrayList<Integer> getNotFriendsListIndex(T v){
+       ArrayList<Integer> list = new ArrayList<>();
+       Vertex<T,Integer> current = head;
+       while(current!=null){
+           if(!hasEdge(v,current.vertexInfo)&&!v.equals(current.vertexInfo))
+               list.add(getIndex(current.vertexInfo));
+           current = current.nextVertex;
+       }
+       return list;
+   }
+   
    public ArrayList<T> getFriendsList(T v){
        ArrayList<T> list = new ArrayList<>();
        Vertex<T,Integer> current = head;
        while(current!=null){
            if(hasEdge(v,current.vertexInfo)&&!v.equals(current.vertexInfo))
                list.add(current.vertexInfo);
+           current = current.nextVertex;
+       }
+       return list;
+   }
+   
+   public ArrayList<Integer> getFriendsListIndex(T v){
+       ArrayList<Integer> list = new ArrayList<>();
+       Vertex<T,Integer> current = head;
+       while(current!=null){
+           if(hasEdge(v,current.vertexInfo)&&!v.equals(current.vertexInfo))
+               list.add(getIndex(current.vertexInfo));
            current = current.nextVertex;
        }
        return list;
@@ -310,7 +343,7 @@ public class Graph<T extends Comparable<T>> {
            System.out.println("Error!");
       if(!hasEdge(source,destination)){
           addEdge(source,destination,a);
-          addEdge(destination,source,a);
+          addEdge(destination,source,2);
           return;
       }
       Vertex<T,Integer> sourceVertex = head;
@@ -404,21 +437,26 @@ public class Graph<T extends Comparable<T>> {
        }
    }
    
-   public void event1(T source,T destination){        
-        if (head==null)
-           System.out.println("The graph is  empty...");
-        if (!hasVertex(source) || !hasVertex(destination)) 
-           System.out.println("There is no vertex " + destination + " in the graph");
-        if(!hasEdge(source,destination)){
-            Vertex<T,Integer> sourceVertex = head;
-            while (sourceVertex!=null)	{
-            if ( sourceVertex.vertexInfo.compareTo( source ) == 0 )   {
-            // Reached source vertex, look for destination now
-            Vertex<T,Integer> destinationVertex = head;
-            while (destinationVertex!=null)	{
-                if ( destinationVertex.vertexInfo.compareTo( destination ) == 0 )   {
-                    int sum=0;
-                    
+   public void event1(T v){        
+        Vertex<T,Integer> current = head;
+        while(current!=null){
+            if(current.vertexInfo.equals(v)){
+                ArrayList<T> list = getNotFriendsList(v);
+                while(true){
+                    System.out.println("Please choose any stranger you want to be friend with by looking at the list below: ");
+                    System.out.println(list);
+                    System.out.print("Enter student ID: ");
+                    String name;
+                    while(true){
+                        name = s.nextLine();
+                        if(list.contains(name))
+                            break;
+                        System.out.print("Name entered is not available. Please enter one more time: ");
+                    }                    
+                    Vertex<T,Integer> destination = head;
+                    while(destination!=null){                        
+                        if(destination.vertexInfo.equals(name)){
+                            int sum=0;                    
                             Boolean question=false;
                             System.out.println("\n\nLET'S START!!!\n");
                             System.out.print("\n#Q1) Generics enable errors to be detected at compile time rather than at runtime: ");
@@ -442,29 +480,28 @@ public class Graph<T extends Comparable<T>> {
                             if(question)
                                 sum+=1;
                             System.out.println("\nCongratulation! You managed to help your friend with the questions. From 5 questions, you get " + sum + " correct answer!\n");
-                        
-                    int rate = 0;
-                    if(sum>2)
-                        rate = 1;
-                    if(sum<=2)
-                        rate = 0;                    
-                    int a = r.nextInt(10)+1;
-                    if(rate==1){
-                        addEdge(destination,source,10);
-                        addEdge(source,destination,a);
+                            if(sum>2){
+                                addEdge(destination.vertexInfo,current.vertexInfo,10);
+                                addEdge(current.vertexInfo,destination.vertexInfo,5);
+                            }                            
+                            if(sum<=2){
+                                addEdge(destination.vertexInfo,current.vertexInfo,2);
+                                addEdge(current.vertexInfo,destination.vertexInfo,2);
+                            }                                              
+                            list.remove(name);
+                            break;
+                        }
+                        destination = destination.nextVertex;
                     }
-                    if(rate==0){
-                        addEdge(destination,source,2);
-                        addEdge(source,destination,a);
-                    }
-                    System.out.println("Event 1 (teaching a stranger) is complete!\n");
-               }
-               destinationVertex=destinationVertex.nextVertex;
+                    System.out.print("Enter any number to teach other stranger or '0' to exit from event 1: ");
+                    int a = s.nextInt();
+                    if(a==0)
+                        break;
+                }
             }
-         }
-         sourceVertex=sourceVertex.nextVertex;
-           }
-        }       
+            current = current.nextVertex;
+        }
+        
    }
    
    public void event2(T v){
@@ -472,21 +509,27 @@ public class Graph<T extends Comparable<T>> {
        while(current!=null){
            if(current.vertexInfo.equals(v)){
                ArrayList<T> list = getFriendsList(v);
-               if(list.size()==1){
-                   System.out.println("You only have one friend. You cannot continue in this chit-chatting session.");
+               if(list.size()<=1){
+                   System.out.println("\nYou do not have enough friends. You cannot continue in this chit-chatting session.");
                    break;
                }
-               while(true){                    
-                    System.out.println("This is your current friends list: " + list);
-                    System.out.print("Choose any friend you would like to have chit-chat with. Enter the name here: ");
-                    String name = s.nextLine();
-                    while(!list.contains(name)){
-                        System.out.print("Name entered is not in your friends list. Please enter one more time: ");
-                        name = s.nextLine();
+               while(true){  
+                     if(list.size()<=1){
+                        System.out.println("You do not have enough friends. You cannot continue in this chit-chatting session.");
+                        break;
                     }
-                    System.out.println("You will have your chit-chatting session with " + name + ". During the session, you will talk about your other friends with " + name + ".");
-                    System.out.println("For reminder, this session will only affect your friends reputation point. Your reputation point will remain the same.");
-                    System.out.print("Choose your other friend that you want to bring into the conversation: ");
+                    System.out.println("\n\nThis is your current friends list: " + list);
+                    System.out.print("Choose any friend you would like to have chit-chat with. Enter the name here: ");
+                    String name;
+                    while(true){
+                        name = s.nextLine();
+                        if(list.contains(name))
+                            break;
+                        System.out.print("Name entered is not in your friends list. Please enter one more time: ");
+                    }
+                    System.out.println("\nYou will have your chit-chatting session with " + name + ". During the session, you will talk about your other friends with " + name + ".");
+                    System.out.println("*for reminder, this session will only affect your friends reputation point, your reputation point will remain the same");
+                    System.out.print("\nChoose your other friend that you want to bring into the conversation: ");
                     String name2 = s.nextLine();
                     while(name.equals(name2)||!list.contains(name2)){
                         if(name.equals(name2)){
@@ -500,27 +543,27 @@ public class Graph<T extends Comparable<T>> {
                             continue;
                         }                      
                     }
-                    System.out.println("You will be talking about " + name2 + " with " + name + ".");
+                    System.out.println("\nYou will be talking about " + name2 + " with " + name + ".");
                     Vertex<T,Integer> temp2 = head;
                     while(temp2!=null){
                         if(temp2.vertexInfo.equals(name2)){
                             Vertex<T,Integer> temp = head;
                             while(temp!=null){
                                 if(temp.vertexInfo.equals(name)){
-                                    System.out.println("These are relative reputation point of you and " + name2);
-                                    System.out.println("Your reputation point relative to " + name2 + ": " + getEdgeWeight(temp2.vertexInfo,v));
+                                    System.out.println("\nThese are relative reputation point of you and " + name2);
+                                    System.out.println("\nYour reputation point relative to " + name2 + ": " + getEdgeWeight(temp2.vertexInfo,v));
                                     System.out.println(name2 + " reputation point relative to you: " + getEdgeWeight(v,temp2.vertexInfo));
-                                    System.out.println("You can decide whether you want to talk about good or bad message about " + name2 + " in your conversation with " + name + ".");
+                                    System.out.println("\nYou can decide whether you want to talk about good or bad message about " + name2 + " in your conversation with " + name + ".");
                                     System.out.print("Enter any number if you want to talk about good message and '0' for bad message: ");
                                     int select = s.nextInt();
                                     if(select==0){
-                                        System.out.println("You have decided to talk about bad message.");
+                                        System.out.println("\nYou have decided to talk about bad message.");
                                         int newRep = -(getEdgeWeight(current.vertexInfo,temp2.vertexInfo));
                                         changeEdgeWeight(temp.vertexInfo,temp2.vertexInfo,newRep);
                                         System.out.println("Because of your chit-chatting session, " + name2 + " reputation point relative to " + name + " will be " + newRep);                                        
                                     }
                                     else{
-                                        System.out.println("You have decided to talk about good message. What a nice person are you!");
+                                        System.out.println("\nYou have decided to talk about good message. What a nice person are you!");
                                         int newRep = getEdgeWeight(current.vertexInfo,temp2.vertexInfo);
                                         changeEdgeWeight(temp.vertexInfo,temp2.vertexInfo,(newRep/2)+(newRep%2));
                                         System.out.println("Because of your chit-chatting session, " + name2 + " reputation point relative to " + name + " will be " + newRep);
@@ -533,7 +576,7 @@ public class Graph<T extends Comparable<T>> {
                     }
                     list.remove(name);
                     list.remove(name2);
-                    System.out.print("Do you want to have another chit-chatting session? Enter any number to continue and '0' to exit: ");
+                    System.out.print("\nDo you want to have another chit-chatting session? Enter any number to continue and '0' to exit: ");
                     int select = s.nextInt();
                     if(select==0)
                         break;                   
@@ -740,4 +783,146 @@ public class Graph<T extends Comparable<T>> {
        else
            return sum;
    }
+   
+    public void event5(T v){
+       path.clear();
+       Vertex<T,Integer> user = getVertex(v);
+       ArrayList<Integer>[] adjList = new ArrayList[10];
+       for(int i=0;i<10;i++){
+           adjList[i] = getFriendsListIndex(getVertex(i));           
+       }
+       ArrayList<T> namelist = getAllVertexObjects();
+       namelist.remove(v);
+       System.out.println("Students name list: " + namelist);
+       System.out.print("Choose your crush from list above: ");
+       String crushName;
+       Vertex<T,Integer> crush = head;
+       while(true){
+           crushName = s.nextLine();
+           if(namelist.contains(crushName)){
+               while(crush!=null){
+                   if(crush.vertexInfo.equals(crushName))
+                       break;
+                   crush = crush.nextVertex;
+               }
+               namelist.remove(crushName);
+               break;
+           }
+           System.out.print("Name entered is not available. Please enter one more time: ");
+       }
+       ArrayList<Integer> possibleStartPoint = getNotFriendsListIndex(crush.vertexInfo);
+       int rumorsStartPoint;
+       while(true){
+           rumorsStartPoint = r.nextInt(9)+1;
+           if(rumorsStartPoint!=getIndex(crush.vertexInfo)&&possibleStartPoint.contains(rumorsStartPoint))
+               break;
+       }
+       Vertex<T,Integer> rumors = head;
+       while(rumors!=null){
+           if(rumors.vertexInfo.equals(getVertex(rumorsStartPoint)))
+               break;
+           rumors = rumors.nextVertex;
+       }
+       boolean[] isVisited = new boolean[10];
+       LinkedList<T> pathlist = new LinkedList<>();
+       pathlist.add(rumors.vertexInfo);
+       System.out.println("\nIt is believed that the rumors start from " + rumors.vertexInfo + ". You need to stop the rumors from reach to your crush.\n");
+       System.out.println("\n\n\nChecking the graph...\n");
+       getAllPath(getIndex(rumors.vertexInfo),getIndex(crush.vertexInfo),isVisited,pathlist,adjList);
+       if(path.isEmpty()){
+           System.out.println("There is no connection between " + rumors.vertexInfo + " to " + crush.vertexInfo + ". Don't worry!\n");
+           return;
+       }
+       System.out.println("These are some of the path that connect " + rumors.vertexInfo + " to " + crush.vertexInfo + ": \n");
+       for(int i=0;i<path.size();i++){
+           System.out.print(i+1 + ") ");
+           if(path.get(i).contains(v)){
+               path.get(i).print();
+               System.out.print("*this path is removed because user is included in this path, the connection breaks\n");
+               path.remove(i);
+               continue;
+            }          
+           path.get(i).print();
+       }
+       if(path.isEmpty()){
+           System.out.println("\nThere is no connection between " + rumors.vertexInfo + " to " + crush.vertexInfo + ". Don't worry!");
+           return;
+       }
+       System.out.println("\n\n\nChecking the rumors position.....");
+       System.out.println("\n*\"^^^\" is the indicator to the current rumors position among students");
+       System.out.println("\n\n\n----------Day 0----------");
+       for(int i=0;i<path.size();i++){
+           System.out.print(i+1 + ") ");
+           path.get(i).print();
+       }
+       System.out.println("    ^^^"); //indicator to current rumors position  
+       System.out.println("\n\nIn the next day, the rumors has move to the next person.");
+       int day=1;
+       while(!path.isEmpty()){  
+           for(int i=0;i<path.size();i++){
+               path.get(i).removeFirst();
+               if(path.get(i).size==1){
+                   System.out.println("\n\n**************************************************");
+                   System.out.println("\nOh no! The rumors has reached your crush in path " + (i+1) + "! T_T");
+                   return;
+               }
+           }
+           System.out.println("\n\n\n----------Day " + day + "----------");
+           for(int i=0;i<path.size();i++){
+                System.out.print(i+1 + ") ");
+                path.get(i).print();
+            }
+           System.out.println("    ^^^");
+           System.out.print("\nChoose any path you want to convince to stop the rumors. Enter the path number: ");
+           int pathOption;
+           while(true){
+               pathOption = s.nextInt();
+               if((pathOption-1)>=0&&(pathOption-1)<path.size())
+                   break;
+           }           
+            System.out.println("\nYou will convince " + path.get(pathOption-1).head.element + " in path " + pathOption + ".....");
+            System.out.println("\nChecking......");
+            System.out.println("\nNice! You have stop rumors in path " + pathOption + ".");
+            for(int i=0;i<path.size();i++){
+                if(i==pathOption-1)
+                    continue;
+                if(path.get(i).head.element.equals(path.get(pathOption-1).head.element)){
+                    System.out.println("\nBecause both path have the same person, rumors has stop in path " + i+1 + " too.");
+                    path.remove(i);
+                }
+            }
+            path.remove(pathOption-1);
+            for(int i=0;i<path.size();i++){
+                
+            }
+            if(path.isEmpty())
+                break;
+            System.out.println("\nLet's move to the next day.");
+            day++;
+       }
+        System.out.println("The rumors did not reach your crush! ^__^");
+    }
+    
+    ArrayList<LinkedList<T>> path = new ArrayList<>();
+   
+    public void getAllPath(Integer s,Integer d,boolean[] isVisited,LinkedList<T> pathlist,ArrayList<Integer>[] adjList){
+        if(s.equals(d)){              
+            LinkedList<T> temp = new LinkedList<>();
+            for(int i=0;i<pathlist.size;i++){
+                temp.add(i, pathlist.get(i));
+            }
+            path.add(temp);
+            return;
+        }
+        isVisited[s] = true;
+        for(Integer i : adjList[s]){
+            if(!isVisited[i]){
+                pathlist.add(getVertex(i));
+                getAllPath(i,d,isVisited,pathlist,adjList);
+                pathlist.remove(pathlist.indexOf(getVertex(i)));
+            }
+        }
+        isVisited[s] = false;
+    }
+    
 }
