@@ -157,7 +157,9 @@ public class TheSociopath {
                             break;
                         }
                         case 5:{
-                            System.out.println("----------Event 5----------");
+                            System.out.println("\n\n----------Event 5----------\n\n");
+                            students.event5(studentsID[0]);
+                            System.out.println("\n\nEvent 5 completed!\n\n");
                             break;
                         }
                         case 6:{
