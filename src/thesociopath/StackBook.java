@@ -3,11 +3,11 @@ package thesociopath;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
+
 /*Event 4
 Stacking books
 */
 public class StackBook {
-    // private LL<Integer> books = new LL<>();
     private LinkedList<Integer> books = new LinkedList<>();
     private int numberOfBooks, heightOfBooks;
     private int count=0;
