@@ -114,7 +114,7 @@ public class TheSociopath {
                                     System.out.print("\nName inserted is not available. Please enter one more time: ");
                                     name = s.nextLine();
                                 }
-                                students.event1(studentsID[0], name);
+                                students.event1(name);
                                 System.out.print("Enter any number to teach other stranger or '0' to exit from event 1: ");
                                 int a = s.nextInt();
                                 if(a==0)
@@ -153,7 +153,6 @@ public class TheSociopath {
                         case 4:{
                             System.out.println("----------Event 4----------");
                             arrangeBook.run();
-                            arrangeBook.output();
                             break;
                         }
                         case 5:{
