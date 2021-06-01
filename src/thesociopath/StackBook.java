@@ -8,7 +8,7 @@ Stacking books
 */
 public class StackBook {
     // private LL<Integer> books = new LL<>();
-    LinkedList<Integer> books = new LinkedList<>();
+    private LinkedList<Integer> books = new LinkedList<>();
     private int numberOfBooks, heightOfBooks;
     private int count=0;
     boolean order=true;//order true indicate that there are books arranged in increasing order
@@ -49,7 +49,7 @@ public class StackBook {
         count--;//because it will count +1 even after the order
 
         System.out.printf("You met librarian's request in %d round(s)\n", count);
-        System.out.print("The Height of the books: ");
+        System.out.print("The height of the books: ");
         System.out.print(books);
     }
 } 
