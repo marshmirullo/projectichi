@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-public class Graph<T extends Comparable<T>> {
+public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
    Vertex<T,Integer> head;
    int size;
    
