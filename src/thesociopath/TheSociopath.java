@@ -17,7 +17,7 @@ public class TheSociopath {
         System.out.print("Please enter your name for student ID: ");
         studentsID[0] = s.nextLine();
         
-        Graph<String> students = new Graph<>();
+        Graph<String,Integer> students = new Graph<>();
         for(String a : studentsID)
             students.addVertex(a);
         Random r = new Random();

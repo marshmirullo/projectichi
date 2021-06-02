@@ -1,6 +1,6 @@
 package thesociopath;
 
-
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -78,28 +78,29 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
         }
     }
 
-   public class Edge<T extends Comparable<T>, N extends Comparable <N>> {
+    public class Edge<T extends Comparable<T>, N extends Comparable <N>> {
     
-	Vertex<T,N> toVertex;
-	N weight;
-	Edge<T,N> nextEdge;
+        Vertex<T,N> toVertex;
+        N weight;
+        Edge<T,N> nextEdge;
 	
-	public Edge()	{
-		toVertex = null;
-		weight = null;
-		nextEdge = null;
-	}
+        public Edge()	{
+            toVertex = null;
+            weight = null;
+            nextEdge = null;
+        }
 	
-	public Edge(Vertex<T,N> destination, N w, Edge<T,N> a)	{
-		toVertex = destination;
-		weight = w;
-		nextEdge = a;
-	}
+        public Edge(Vertex<T,N> destination, N w, Edge<T,N> a)	{
+            toVertex = destination;
+            weight = w;
+            nextEdge = a;
+        }
 
         public void setWeight(N weight) {
             this.weight = weight;
         }
     }
+
    Random r = new Random();
    Scanner s = new Scanner(System.in);
 	
