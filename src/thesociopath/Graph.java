@@ -527,7 +527,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
        }
    }
    
-   public void event1(T v){        
+  public void event1(T v){        
         Vertex<T,Integer> current = head;
         while(current!=null){
             if(current.vertexInfo.equals(v)){
@@ -545,36 +545,15 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
                     }                    
                     Vertex<T,Integer> destination = head;
                     while(destination!=null){                        
-                        if(destination.vertexInfo.equals(name)){
-                            int sum=0;                    
-                            Boolean question=false;
+                        if(destination.vertexInfo.equals(name)){                                               
                             System.out.println("\n\nLET'S START!!!\n");
-                            System.out.print("\n#Q1) Generics enable errors to be detected at compile time rather than at runtime: ");
-                            question = s.nextBoolean();
-                            if(question)
-                                sum+=1;
-                            System.out.print("\n#Q2) Stack holds data in a first-in,first-out(FIFO) style: ");
-                            question = s.nextBoolean();
-                            if(!question)
-                                sum+=1;
-                            System.out.print("\n#Q3) In queue data structure, method 'enqueue()' will delete the first element: ");
-                            question = s.nextBoolean();
-                            if(!question)
-                                sum+=1;
-                            System.out.print("\n#Q4) For graph, vertices can be represented with Array,ArrayList or Linked-list: ");
-                            question = s.nextBoolean();
-                            if(question)
-                                sum+=1;
-                            System.out.print("\n#Q5) Integer and Boolean are primitive data type while String and Array are reference data type: ");
-                            question = s.nextBoolean();
-                            if(question)
-                                sum+=1;
-                            System.out.println("\nCongratulation! You managed to help your friend with the questions. From 5 questions, you get " + sum + " correct answer!\n");
-                            if(sum>2){
+                            int totalmark=questionBank();                             
+                            System.out.println("\nCongratulation! You managed to help your friend with the questions. From 5 questions, you get " + totalmark + " correct answer!\n");
+                            if(totalmark>2){
                                 addEdge(destination.vertexInfo,current.vertexInfo,10);
                                 addEdge(current.vertexInfo,destination.vertexInfo,5);
                             }                            
-                            if(sum<=2){
+                            if(totalmark<=2){
                                 addEdge(destination.vertexInfo,current.vertexInfo,2);
                                 addEdge(current.vertexInfo,destination.vertexInfo,2);
                             }                                              
@@ -590,8 +569,37 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
                 }
             }
             current = current.nextVertex;
-        }
-        
+        }      
+   }
+   
+   public int questionBank(){
+       String[] q = {"Generics enable errors to be detected at compile time rather than at runtime",
+                     "Stack holds data in a first-in,first-out(FIFO) style",
+                     "In queue data structure, method 'enqueue()' will delete the first element",
+                     "For graph, vertices can be represented with Array,ArrayList or Linked-list",
+                     "Integer and Boolean are primitive data type while String and Array are reference data type",
+                     "In an instance method or a constructor, \"this\" is a reference to the current object",
+                     "Variable name can begin with a letter, \"$\", or \"_\"",
+                     "Data structure is an implementation of an ADT within a programming language",
+                     "If a size of a linked list is 1, head node has a value while tail node is null",
+                     "For circular linked list, pointer of tail node points to the head node"};
+       Boolean[] ans = {true,false,false,true,true,true,true,true,false,true};
+       ArrayList<Integer> check = new ArrayList<>();
+       int total=0;
+       for(int i = 1;i<=5;i++){
+           int a = r.nextInt(10);
+           while(true){
+               if(!check.contains(a))
+                   break;
+               a = r.nextInt(10);
+           }
+           check.add(a);
+           System.out.print("\n\n#Q" + i + ") " + q[a] + ": ");
+           boolean userAns = s.nextBoolean();
+           if(userAns==ans[a])
+               total++;
+       }
+       return total;     
    }
    
    public void event2(T v){
