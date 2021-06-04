@@ -22,18 +22,17 @@ public class TheSociopath {
             students.addVertex(a);
         Random r = new Random();
         for(int i=0;i<studentsID.length;i++){
-            int a = r.nextInt(2)+1;
-            ArrayList<Integer> check = new ArrayList<>();
-            for(int j=0;j<a;j++){
-                int b = r.nextInt(10);
-                int c = r.nextInt(10)+1;
-                int d = r.nextInt(10)+1;
-                if(check.contains(b)||b==i)
-                    continue;
-                check.add(b);
-                students.addEdge(studentsID[i], studentsID[b], c);
-                students.addEdge(studentsID[b], studentsID[i], d);
+            int b;
+            while(true){
+                b = r.nextInt(10);
+                if(b!=i)
+                    break;
             }
+            int c = r.nextInt(10)+1;
+            int d = r.nextInt(10)+1;
+            students.addEdge(studentsID[i], studentsID[b], c);
+            students.addEdge(studentsID[b], studentsID[i], d);
+            
         }
         System.out.println("\nDetails of your student ID are as below: ");
         students.printSpecificEdges(studentsID[0]);
@@ -103,23 +102,7 @@ public class TheSociopath {
                             System.out.println("*to get good impression from your new friend, you need to get at least 3 correct answer");
                             System.out.println("*at least 3/5 = 10 reputation point");
                             System.out.println("*2/5 and below = 2 reputation point\n\n");
-                            while(true){
-                                System.out.println("Please choose any stranger you want to be friend with by looking at the list below: ");
-                                ArrayList<String> list = students.getNotFriendsList(studentsID[0]);
-                                System.out.println(list);
-                                System.out.print("Enter student ID: ");
-                                s.nextLine();
-                                String name = s.nextLine();
-                                while(!students.hasVertex(name)&&!list.contains(name)){
-                                    System.out.print("\nName inserted is not available. Please enter one more time: ");
-                                    name = s.nextLine();
-                                }
-                                students.event1(name);
-                                System.out.print("Enter any number to teach other stranger or '0' to exit from event 1: ");
-                                int a = s.nextInt();
-                                if(a==0)
-                                    break;
-                            }
+                            students.event1(studentsID[0]);
                             System.out.println("\n\nEvent 1 completed!\n\n");
                             break;
                         }
