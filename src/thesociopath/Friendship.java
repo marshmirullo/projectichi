@@ -19,7 +19,7 @@ public class Friendship {
     public Friendship() {
     }
 
-        public static String run(){
+        public void run(){
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Enter number of Friendship Relations: ");
@@ -34,10 +34,10 @@ public class Friendship {
             graph[y-1][x-1] = 1;
         }
         modifiedDfs();
-        return "\nTotal number of unique ways the friendship can be formed: "+(total/2);
+            System.out.println("\nTotal number of unique ways the friendship can be formed: "+(total/2));
     }
 
-        public static void modifiedDfsUtil(int v, boolean visited[], int targetSize, int currentSize){
+        public void modifiedDfsUtil(int v, boolean visited[], int targetSize, int currentSize){
         if(currentSize==targetSize){
             total++;
             return;
@@ -51,7 +51,7 @@ public class Friendship {
         }
     }
 
-        public static void modifiedDfs(){
+        public void modifiedDfs(){
         boolean visited[] = new boolean[size];
         for (int i = 2; i <=size; i++) {
             for (int j = 0; j < size; j++) {
