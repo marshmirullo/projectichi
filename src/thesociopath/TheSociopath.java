@@ -13,6 +13,7 @@ public class TheSociopath {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         StackBook arrangeBook=new StackBook();
+        Friendship friendRelation = new Friendship();
         System.out.println("---------------WELCOME TO THE SOCIOPATH---------------\n\n");
         System.out.print("Please enter your name for student ID: ");
         studentsID[0] = s.nextLine();
@@ -146,8 +147,7 @@ public class TheSociopath {
                         }
                         case 6:{
                             System.out.println("----------Event 6----------");
-                            formFriendship();
-                            System.out.println("\n\nEvent 6 completed!\n\n");
+                            friendRelation.run();
                             break;
                         }
                         default:
@@ -171,13 +171,4 @@ public class TheSociopath {
             }
         }      
     }
-    
-    /**
-     * Event 6
-     * @return the number of ways to form friendship based on the input.
-     */
-    public static String formFriendship(){
-        return Friendship.run();
-    }
-    
 }
