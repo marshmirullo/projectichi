@@ -146,6 +146,8 @@ public class TheSociopath {
                         }
                         case 6:{
                             System.out.println("----------Event 6----------");
+                            formFriendship();
+                            System.out.println("\n\nEvent 6 completed!\n\n");
                             break;
                         }
                         default:
@@ -168,6 +170,14 @@ public class TheSociopath {
                 break;
             }
         }      
+    }
+    
+    /**
+     * Event 6
+     * @return the number of ways to form friendship based on the input.
+     */
+    public static String formFriendship(){
+        return Friendship.run();
     }
     
 }
