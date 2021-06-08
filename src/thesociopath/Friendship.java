@@ -26,7 +26,7 @@ public class Friendship {
         size = sc.nextInt();
 
         graph = new int[size][size];
-        System.out.println("Enter relations by line: *The number you enter represents the student");
+        System.out.println("Enter relations by line (*starts from [1]) : ");
         for (int i = 0; i < size; i++) {
             int x = sc.nextInt();
             int y = sc.nextInt();
