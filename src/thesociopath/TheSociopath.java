@@ -14,6 +14,11 @@ public class TheSociopath {
         Scanner s = new Scanner(System.in);
         StackBook arrangeBook=new StackBook();
         Friendship friendRelation = new Friendship();
+        //gui
+        Login login = new Login();
+        login.setVisible(true);
+        Details details = new Details();
+        
         System.out.println("---------------WELCOME TO THE SOCIOPATH---------------\n\n");
         System.out.print("Please enter your name for student ID: ");
         studentsID[0] = s.nextLine();
