@@ -999,7 +999,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
        }
    }
    
-    public void event5(T v){
+     public void event5(T v){
        path.clear();
        Vertex<T,Integer> user = getVertex(v);
        ArrayList<Integer>[] adjList = new ArrayList[10];
@@ -1010,10 +1010,9 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
        namelist.remove(v);
        System.out.println("Students name list: " + namelist);
        System.out.print("Choose your crush from list above: ");
-       String crushName;
+       String crushName = s.nextLine();
        Vertex<T,Integer> crush = head;
        while(true){
-           crushName = s.nextLine();
            if(namelist.contains(crushName)){
                while(crush!=null){
                    if(crush.vertexInfo.equals(crushName))
@@ -1024,6 +1023,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
                break;
            }
            System.out.print("Name entered is not available. Please enter one more time: ");
+           crushName = s.nextLine();
        }
        ArrayList<Integer> possibleStartPoint = getNotFriendsListIndex(crush.vertexInfo);
        int rumorsStartPoint;
@@ -1050,11 +1050,12 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
        }
        System.out.println("These are some of the path that connect " + rumors.vertexInfo + " to " + crush.vertexInfo + ": \n");
        for(int i=0;i<path.size();i++){
-           System.out.print(i+1 + ") ");
+           System.out.print("\n#");
            if(path.get(i).contains(v)){
                path.get(i).print();
                System.out.print("*this path is removed because user is included in this path, the connection breaks\n");
                path.remove(i);
+               i--;
                continue;
             }          
            path.get(i).print();
@@ -1094,22 +1095,18 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
                pathOption = s.nextInt();
                if((pathOption-1)>=0&&(pathOption-1)<path.size())
                    break;
-           }           
+           }                       
             System.out.println("\nYou will convince " + path.get(pathOption-1).head.element + " in path " + pathOption + ".....");
             System.out.println("\nChecking......");
             System.out.println("\nNice! You have stop rumors in path " + pathOption + ".");
-            for(int i=0;i<path.size();i++){
-                if(i==pathOption-1)
-                    continue;
-                if(path.get(i).head.element.equals(path.get(pathOption-1).head.element)){
-                    System.out.println("\nBecause both path have the same person, rumors has stop in path " + i+1 + " too.");
+            T headelement = path.get(pathOption-1).head.element;
+            path.remove(pathOption-1);
+            for(int i=0;i<path.size();i++){               
+                if(path.get(i).head.element.equals(headelement)){
+                    System.out.println("\nBecause both path have the same person, rumors has stop in other path too.");
                     path.remove(i);
                 }
-            }
-            path.remove(pathOption-1);
-            for(int i=0;i<path.size();i++){
-                
-            }
+            }           
             if(path.isEmpty())
                 break;
             System.out.println("\nLet's move to the next day.");
