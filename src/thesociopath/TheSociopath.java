@@ -159,8 +159,8 @@ public class TheSociopath {
                         }
                         case 6:{
                             System.out.println("----------Event 6----------");
-                            System.out.println("\nCongratulations for your graduation! Now let see how many friends you have made throughout the journey.");
-                            System.out.println("---List of friends(including you)----");
+                            System.out.println("\nCongratulations for your graduations!\nNow let see how many friends you have made throughout the journey.");
+                            System.out.println("\n---List of friends(including you)----");
                             System.out.println(Arrays.toString(studentsID));
                             friendRelation.run();
                             break;
