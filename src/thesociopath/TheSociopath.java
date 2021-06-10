@@ -14,14 +14,21 @@ public class TheSociopath {
         Scanner s = new Scanner(System.in);
         StackBook arrangeBook=new StackBook();
         Friendship friendRelation = new Friendship();
-        //gui
-        Login login = new Login();
-        login.setVisible(true);
-        Details details = new Details();
+       
         
         System.out.println("---------------WELCOME TO THE SOCIOPATH---------------\n\n");
-        System.out.print("Please enter your name for student ID: ");
-        studentsID[0] = s.nextLine();
+       
+        Login login = new Login();
+        login.setVisible(true);
+        
+        System.out.print("\nEnter 0 to continue: ");
+        while(true){
+            int a = s.nextInt();
+            if(a==0)
+                break;
+        }
+        
+        studentsID[0] = login.getName();
         
         Graph<String,Integer> students = new Graph<>();
         for(String a : studentsID)
