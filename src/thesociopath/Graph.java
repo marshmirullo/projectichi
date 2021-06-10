@@ -1,17 +1,18 @@
+
 package thesociopath;
 
-import java.util.LinkedList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 
-public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
-    Vertex<T,Integer> head;
-    int size;
+public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
+   Vertex<T,Integer> head;
+   int size;
    
-    public class Vertex<T extends Comparable<T>, N extends Comparable <N>> {
+   public class Vertex<T extends Comparable<T>, N extends Comparable <N>> {
         Random r = new Random();
     
         T vertexInfo;
@@ -101,6 +102,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
         }
     }
 
+   
    Random r = new Random();
    Scanner s = new Scanner(System.in);
 	
@@ -527,7 +529,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
        }
    }
    
-  public void event1(T v){        
+   public void event1(T v){        
         Vertex<T,Integer> current = head;
         while(current!=null){
             if(current.vertexInfo.equals(v)){
@@ -742,7 +744,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
    
         
    
-  public void event3(T v){
+   public void event3(T v){
        Vertex<T,Integer> current = head;
        int lunchperiodleft = 0;
        ArrayList<T> list = new ArrayList<>();
@@ -999,7 +1001,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable <N>> {
        }
    }
    
-     public void event5(T v){
+    public void event5(T v){
        path.clear();
        Vertex<T,Integer> user = getVertex(v);
        ArrayList<Integer>[] adjList = new ArrayList[10];
