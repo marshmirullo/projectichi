@@ -11,11 +11,8 @@ public class TheSociopath {
     static String[] studentsID = {null,"Arjuna","Zhongli","Silva","Asta","Viraj","Ryujin","Ivan","Charlotte","Nafisa"};
 
     public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        StackBook arrangeBook=new StackBook();
-        Friendship friendRelation = new Friendship();
+        Scanner s = new Scanner(System.in);      
        
-        
         System.out.println("---------------WELCOME TO THE SOCIOPATH---------------\n\n");
        
         Login login = new Login();
@@ -44,9 +41,9 @@ public class TheSociopath {
             int c = r.nextInt(10)+1;
             int d = r.nextInt(10)+1;
             students.addEdge(studentsID[i], studentsID[b], c);
-            students.addEdge(studentsID[b], studentsID[i], d);
-            
+            students.addEdge(studentsID[b], studentsID[i], d);         
         }
+        
         System.out.println("\nDetails of your student ID are as below: ");
         students.printSpecificEdges(studentsID[0]);
         System.out.println("\n\nPlease choose any option available to continue. Enter the respective number below: \n");
@@ -148,6 +145,7 @@ public class TheSociopath {
                         }
                         case 4:{
                             System.out.println("----------Event 4----------");
+                            StackBook arrangeBook=new StackBook();
                             arrangeBook.run();
                             break;
                         }
@@ -159,6 +157,7 @@ public class TheSociopath {
                         }
                         case 6:{
                             System.out.println("----------Event 6----------");
+                            Friendship friendRelation = new Friendship();
                             System.out.println("\nCongratulations for your graduations!\nNow let see how many friends you have made throughout the journey.");
                             System.out.println("\n---List of friends(including you)----");
                             System.out.println(Arrays.toString(studentsID));
