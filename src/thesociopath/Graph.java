@@ -1079,7 +1079,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        while(!path.isEmpty()){  
            for(int i=0;i<path.size();i++){
                path.get(i).removeFirst();
-               if(path.get(i).size==1){
+               if(path.get(i).getSize()==1){
                    System.out.println("\n\n**************************************************");
                    System.out.println("\nOh no! The rumors has reached your crush in path " + (i+1) + "! T_T");
                    return;
@@ -1122,7 +1122,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
     public void getAllPath(Integer s,Integer d,boolean[] isVisited,LinkedList<T> pathlist,ArrayList<Integer>[] adjList){
         if(s.equals(d)){              
             LinkedList<T> temp = new LinkedList<>();
-            for(int i=0;i<pathlist.size;i++){
+            for(int i=0;i<pathlist.getSize();i++){
                 temp.add(i, pathlist.get(i));
             }
             path.add(temp);
