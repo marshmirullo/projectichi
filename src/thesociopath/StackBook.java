@@ -8,14 +8,14 @@ import java.util.Scanner;
 Stacking books
 */
 public class StackBook {
-    private LinkedList<Integer> books = new LinkedList<>();
+    private LinkedList<Integer> books;
     private int numberOfBooks, heightOfBooks;
     private int count=0;
     boolean order=true;//order true indicate that there are books arranged in increasing order
 
     public void run(){
         Scanner s=new Scanner(System.in);
-        
+        books = new LinkedList<>();
             System.out.println("Enter the number of books: ");
             numberOfBooks=s.nextInt();
             int i=0;
