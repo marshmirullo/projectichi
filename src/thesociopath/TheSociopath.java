@@ -144,19 +144,19 @@ public class TheSociopath {
                             break;
                         }
                         case 4:{
-                            System.out.println("----------Event 4----------");
+                            System.out.println("\n\n----------Event 4----------");
                             StackBook arrangeBook=new StackBook();
                             arrangeBook.run();
                             break;
                         }
                         case 5:{
-                            System.out.println("\n\n----------Event 5----------\n\n");
+                            System.out.println("\n\n----------Event 5----------");
                             students.event5(studentsID[0]);
                             System.out.println("\n\nEvent 5 completed!\n\n");
                             break;
                         }
                         case 6:{
-                            System.out.println("----------Event 6----------");
+                            System.out.println("\n\n----------Event 6----------");
                             Friendship friendRelation = new Friendship();
                             System.out.println("\nCongratulations for your graduations!\nNow let see how many friends you have made throughout the journey.");
                             System.out.println("\n---List of friends(including you)----");
