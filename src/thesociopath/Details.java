@@ -1,4 +1,4 @@
-
+package thesociopath;
 
 public class Details extends javax.swing.JFrame {
         

@@ -1,10 +1,10 @@
 package thesociopath;
 
-public class LL<E> {
+public class LinkedList<E> {
 
-    private class Node<T> {
-        private Node<T> next;
-        private T element;
+    public class Node<T> {
+        Node<T> next;
+        T element;
 
         public Node(T element) {
             this.next = null;
@@ -12,14 +12,14 @@ public class LL<E> {
         }
     }
 
-    private Node<E> head, tail;
+    public Node<E> head, tail;
     private int size;
 
     public int getSize() {
         return size;
     }
 
-    public LL() {
+    public LinkedList() {
     }
 
     public void addFirst(E e) {

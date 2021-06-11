@@ -1,3 +1,4 @@
+package thesociopath;
 
 import java.util.Scanner;
 import javax.swing.JFrame;
