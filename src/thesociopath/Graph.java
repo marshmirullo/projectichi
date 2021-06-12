@@ -20,9 +20,9 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
         int rep=0;
         int lunchStart; 
         int lunchPeriod;
-        int dive;
         int indeg;
         int outdeg;
+        double dive;
         Vertex<T,N> nextVertex;
         Edge<T,N> firstEdge;
  
@@ -41,12 +41,13 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
             nextVertex = next;
             firstEdge = null;
             lunchStart = generateRandomTime();
-            dive = r.nextInt(99)+1;
+            dive = 0;
             int a = r.nextInt(60+1-5)+5;
             while(a%10!=0){
                 a = r.nextInt(60+1-5)+5;
             }
             int afterPeriod = a + lunchStart;
+            //generate the right time for lunch period
             if(afterPeriod>1360){
                 lunchPeriod = 1360 - lunchStart;
             }
@@ -54,7 +55,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                 lunchPeriod = a;
             }
         }
- 
+        
         //method to generate the right time number
         public int generateRandomTime(){
             Boolean check = false;
@@ -75,9 +76,10 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
             return a;
         }
         
-        //adding all reputation points
+        //adding all reputation points and update the diving rate
         public int totalRep(int a){
             rep = rep + a;
+            dive = Math.round(100 - (rep/(double)(indeg*10))*100)*100.0/100.0;
             return rep;
         }
     }
@@ -121,6 +123,19 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
 
    public int getSize()   {
       return this.size;
+   }
+   
+   //method to get current diving rate of the students
+   public double getDive(T v){
+       ArrayList<T> list = getFriendsList(v);
+       Vertex<T,Integer> current = head;
+       while(current!=null){
+           if(current.vertexInfo.equals(v)){
+                return current.dive;
+           }
+           current = current.nextVertex;
+       }
+       return 0.0;
    }
    
    public int getIndeg(T v)  {
@@ -505,7 +520,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
       Vertex<T,Integer> temp=head;
       while (temp!=null) {
          System.out.println("-------------------------#" + temp.vertexInfo + "-------------------------" );
-         System.out.println("Diving Rate = " + temp.dive + ", Lunch Time = " + temp.lunchStart + ", Lunch Period = " + temp.lunchPeriod);
+         System.out.println("Diving Rate = " + temp.dive + "%, Lunch Time = " + temp.lunchStart + ", Lunch Period = " + temp.lunchPeriod);
          System.out.println("Current reputation point = " + getRep(temp.vertexInfo));
          Edge<T,Integer> currentEdge = temp.firstEdge;
          System.out.println("List of friends with respective reputation point : ");
