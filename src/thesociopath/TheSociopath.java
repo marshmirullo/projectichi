@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class TheSociopath {
     
-    static String[] studentsID = {null,"Arjuna","Scarlett","Silva","Asta","Alexa","Ryujin","Ivan","Charlotte","Nafisa"};
+    static String[] studentsID = {null,"Aaron","Talia","Yaeger","Deji","Natasha","Ishwa","Sue","Marzia","Kiyomi"};
    
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
