@@ -12,6 +12,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
    Vertex<T,Integer> head;
    int size;
    
+   //class of vertex
    public class Vertex<T extends Comparable<T>, N extends Comparable <N>> {
         Random r = new Random();
     
@@ -54,6 +55,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
             }
         }
  
+        //method to generate the right time number
         public int generateRandomTime(){
             Boolean check = false;
             int a=0;
@@ -72,13 +74,15 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
             }
             return a;
         }
-    
+        
+        //adding all reputation points
         public int totalRep(int a){
             rep = rep + a;
             return rep;
         }
     }
 
+    //class of edge
     public class Edge<T extends Comparable<T>, N extends Comparable <N>> {
     
         Vertex<T,N> toVertex;
@@ -176,6 +180,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
          return false;
    }
    
+   //method to change the vertex info
    public void editVertexInfo(T v, T newID){
        if(hasVertex(v)){
            Vertex<T,Integer> temp = head;
@@ -261,7 +266,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                     sourceVertex.firstEdge=newEdge;
                     sourceVertex.outdeg++;
                     destinationVertex.indeg++;
-                    destinationVertex.totalRep(w);
+                    destinationVertex.totalRep(w);      //add the new point to the sum reputation point of respective vertex
                     return true;
                }
                destinationVertex=destinationVertex.nextVertex;
@@ -358,6 +363,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
       return false;
    }
    
+   //method to get list of non-friends students
    public ArrayList<T> getNotFriendsList(T v){
        ArrayList<T> list = new ArrayList<>();
        Vertex<T,Integer> current = head;
@@ -369,6 +375,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        return list;
    }
    
+   //method to change the non-friends vertex info to index
    public ArrayList<Integer> getNotFriendsListIndex(T v){
        ArrayList<Integer> list = new ArrayList<>();
        Vertex<T,Integer> current = head;
@@ -380,6 +387,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        return list;
    }
    
+   //method to get friends list
    public ArrayList<T> getFriendsList(T v){
        ArrayList<T> list = new ArrayList<>();
        Vertex<T,Integer> current = head;
@@ -391,6 +399,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        return list;
    }
    
+   //method to change the friends vertex info to index
    public ArrayList<Integer> getFriendsListIndex(T v){
        ArrayList<Integer> list = new ArrayList<>();
        Vertex<T,Integer> current = head;
@@ -428,6 +437,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
       return notFound;
    }
    
+   //method to change the weight of an edge
    public void changeEdgeWeight(T source,T destination,int a){
       if (head==null)
            System.out.println("Error!");
@@ -476,6 +486,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
       return list;   
    }
    
+   //method to get reputation point of a studens
    public int getRep(T v){
        if (!hasVertex(v))
            return 0;
@@ -489,6 +500,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        return 0;
    }
    
+   //method to print all of the vertex and its edges
    public void printEdges()   {
       Vertex<T,Integer> temp=head;
       while (temp!=null) {
@@ -506,6 +518,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
       }  
    }
    
+   //method to print specific vertex and its edges
    public void printSpecificEdges(T v){
        if(!hasVertex(v)){
            System.out.println("Vertex " + v + " cannot be found!");
@@ -529,11 +542,12 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        }
    }
    
+   //event 1 method
    public void event1(T v){        
         Vertex<T,Integer> current = head;
         while(current!=null){
             if(current.vertexInfo.equals(v)){
-                ArrayList<T> list = getNotFriendsList(v);
+                ArrayList<T> list = getNotFriendsList(v);       //get non-friends list because event 1 involve non-friends only
                 while(true){
                     System.out.println("Please choose any stranger you want to be friend with by looking at the list below: ");
                     System.out.println(list);
@@ -549,13 +563,14 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                     while(destination!=null){                        
                         if(destination.vertexInfo.equals(name)){                                               
                             System.out.println("\n\nLET'S START!!!\n");
-                            int totalmark=questionBank();                             
+                            System.out.println("\nYou are only allowed to enter either 'true' or 'false'.\n");
+                            int totalmark=questionBank();       //call for questionBank() method, it will return total mark from the quick quiz                         
                             System.out.println("\nCongratulation! You managed to help your friend with the questions. From 5 questions, you get " + totalmark + " correct answer!\n");
-                            if(totalmark>2){
+                            if(totalmark>2){        //totalmark>2, user will get 10 reputation point from other student
                                 addEdge(destination.vertexInfo,current.vertexInfo,10);
                                 addEdge(current.vertexInfo,destination.vertexInfo,5);
                             }                            
-                            if(totalmark<=2){
+                            if(totalmark<=2){       //totalmark<=2, both user and other student will get rep point of 2
                                 addEdge(destination.vertexInfo,current.vertexInfo,2);
                                 addEdge(current.vertexInfo,destination.vertexInfo,2);
                             }                                              
@@ -574,6 +589,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
         }      
    }
    
+   //method to randomly pick 5 questions 
    public int questionBank(){
        String[] q = {"Generics enable errors to be detected at compile time rather than at runtime",
                      "Stack holds data in a first-in,first-out(FIFO) style",
@@ -604,11 +620,14 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        return total;     
    }
    
+   //event 2 method
    public void event2(T v){
        Vertex<T,Integer> current = head;
+       //first section, user will act as the third party (person who deliver the message)
        while(current!=null){
            if(current.vertexInfo.equals(v)){
                ArrayList<T> list = getFriendsList(v);
+               //user need to have at least 2 friends to do this event
                if(list.size()<=1){
                    System.out.println("\nYou do not have enough friends. You cannot continue in this chit-chatting session.");
                    break;
@@ -620,17 +639,19 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                     }
                     System.out.println("\n\nThis is your current friends list: " + list);
                     System.out.print("Choose any friend you would like to have chit-chat with. Enter the name here: ");
-                    String name;
-                    while(true){
-                        name = s.nextLine();
+                    String name = s.nextLine();
+                    //user will choose one friend to have chit-chat with
+                    while(true){                       
                         if(list.contains(name))
                             break;
                         System.out.print("Name entered is not in your friends list. Please enter one more time: ");
+                        name = s.nextLine();
                     }
                     System.out.println("\nYou will have your chit-chatting session with " + name + ". During the session, you will talk about your other friends with " + name + ".");
                     System.out.println("*for reminder, this session will only affect your friends reputation point, your reputation point will remain the same");
                     System.out.print("\nChoose your other friend that you want to bring into the conversation: ");
                     String name2 = s.nextLine();
+                    //user will choose other friend to talk about in the conversation
                     while(name.equals(name2)||!list.contains(name2)){
                         if(name.equals(name2)){
                             System.out.print("You cannot enter the same name. Please choose other friends: ");
@@ -656,13 +677,13 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                                     System.out.println("\nYou can decide whether you want to talk about good or bad message about " + name2 + " in your conversation with " + name + ".");
                                     System.out.print("Enter any number if you want to talk about good message and '0' for bad message: ");
                                     int select = s.nextInt();
-                                    if(select==0){
+                                    if(select==0){      //user choose number '0' to talk about bad message
                                         System.out.println("\nYou have decided to talk about bad message.");
                                         int newRep = -(getEdgeWeight(current.vertexInfo,temp2.vertexInfo));
                                         changeEdgeWeight(temp.vertexInfo,temp2.vertexInfo,newRep);
                                         System.out.println("Because of your chit-chatting session, " + name2 + " reputation point relative to " + name + " will be " + newRep);                                        
                                     }
-                                    else{
+                                    else{       //user choose other number to talk about good message
                                         System.out.println("\nYou have decided to talk about good message. What a nice person are you!");
                                         int newRep = getEdgeWeight(current.vertexInfo,temp2.vertexInfo);
                                         changeEdgeWeight(temp.vertexInfo,temp2.vertexInfo,(newRep/2)+(newRep%2));
@@ -684,6 +705,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
            }
            current = current.nextVertex;
        }
+       //second section, other students will start talking about each other, including user
        System.out.println("\nChecking other students: \n");
        Vertex<T,Integer> current2 = head;
        while(current2!=null){ 
@@ -743,14 +765,14 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
     }
    
         
-   
+   //event 3 method
    public void event3(T v){
        Vertex<T,Integer> current = head;
        int lunchperiodleft = 0;
-       ArrayList<T> list = new ArrayList<>();
-       ArrayList<Integer> list_lunchPeriod = new ArrayList<>();
-       ArrayList<Integer> list_lunchStart = new ArrayList<>();
-       ArrayList<Integer> list_lunchEnd = new ArrayList<>();
+       ArrayList<T> list = new ArrayList<>();       //list of students who can have lunch with user                                  
+       ArrayList<Integer> list_lunchPeriod = new ArrayList<>();         //list of lunch period of students who can have lunch with user
+       ArrayList<Integer> list_lunchStart = new ArrayList<>();          //list of lunch start time of students who can have lunch with user
+       ArrayList<Integer> list_lunchEnd = new ArrayList<>();            //list of lunch end time of studetns who can have lunch with user
        while(current!=null){
            if(current.vertexInfo.compareTo(v)==0){
                int lunchEndTime_1 = TimeGenerator(current.lunchPeriod,current.lunchStart);
@@ -763,6 +785,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                        continue;
                    }
                    int lunchEndTime_2 = TimeGenerator(destination.lunchPeriod ,destination.lunchStart); //lunch end time for destination vertex
+                   //based on 4 condition, students with lunch time interval same as the user will be stored in the list
                    if(lunchEndTime_1>destination.lunchStart&&current.lunchStart<destination.lunchStart){
                        list.add(destination.vertexInfo);
                        list_lunchPeriod.add(TimeGenerator2(lunchEndTime_1,destination.lunchStart));
@@ -801,6 +824,8 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
            }
            current = current.nextVertex;
        }
+       //user will choose place to have lunch 
+       //the purpose of this feature is to give user option to either eat with 1 person or 3 person at one time
        System.out.println("\nPlease choose place to have lunch: ");
        System.out.println("\n1) Mak Cik Cafe\n\n*serve variety of Malay foods\n*special dish: Nasi Ayam Penyet\n*every table maximum capacity: 2 person");
        System.out.println("\n\n2) College Food Court\n\n*have multiple stalls and foods\n*a lot of options\n*every table maximum capacity: 4 person");
@@ -808,15 +833,18 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        int lunchplace = s.nextInt();
        int timeavailable = current.lunchStart;
        if(lunchplace==0){
+           //user will have lunch with 1 person only
            System.out.println("\nYou have chosen 'Mak Cik Cafe' place. You are only allowed to have lunch with only one person at one time.");
             while(true){
                 if(timeavailable!=current.lunchStart){
+                    //this for loop will remove all time interval that is not suitable for user lunch time
                      for(int i=0;i<list.size();i++){
                         if(list_lunchEnd.get(i)==list_lunchStart.get(i)){
                             list.remove(i);
                             list_lunchPeriod.remove(i);
                             list_lunchStart.remove(i);
                             list_lunchEnd.remove(i);
+                            i--;
                             continue;
                         }
                         if(list_lunchEnd.get(i)<timeavailable){
@@ -824,6 +852,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                             list_lunchPeriod.remove(i);
                             list_lunchStart.remove(i);
                             list_lunchEnd.remove(i);
+                            i--;
                             continue;
                         }
                         if(list_lunchStart.get(i)>timeavailable){
@@ -833,10 +862,12 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                     }
                 }
            
+                //list is empty, user do not have any friends to have lunch with
                 if(list.isEmpty()){
                     System.out.println("\nThe list is empty. You do not have any friends available to have lunch with.\n");
                     break;
                 }
+                //there is no lunch period left 
                 if(lunchperiodleft<=0){
                     System.out.println("\nAt the moment, you do not have any lunch period left.\n");
                     break;
@@ -849,20 +880,22 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                 }
                 System.out.print("\nChoose any of the person above to have lunch with. Enter the number of the person: ");
                 int select = s.nextInt();
+                //choose a students listed above to have lunch with
                 Vertex<T,Integer> temp = head;
                 while(temp!=null){
                     if(temp.vertexInfo.compareTo(list.get(select-1))==0){
                         System.out.println("You have choose " + list.get(select -1 ) + " to have lunch together.");
-                        System.out.print("Time interval available to have lunch together: " + list_lunchStart.get(select-1) + " - " + list_lunchEnd.get(select-1));
-                        //TimeIntervalGenerator(current.vertexInfo,temp.vertexInfo);
+                        System.out.print("Time interval available to have lunch together: " + list_lunchStart.get(select-1) + " - " + list_lunchEnd.get(select-1));                       
                         System.out.print("\nHow many minutes do you want to spend lunch together?: ");
                         int duration = s.nextInt();
+                        //user will enter how many minutes to have lunch together
                         while(duration>(list_lunchEnd.get(select-1)-list_lunchStart.get(select-1))){
                             System.out.print("\nThe time entered exceed " + list.get(select-1) + " lunch time. Please enter one more time: ");
                             duration = s.nextInt();
                         }
                         lunchperiodleft-=duration;
                         System.out.println("\nYou have spend " + duration + " minutes with " + list.get(select-1) + ". Your reputation point will increase by 1.");
+                        //call for TimeGenerator() method to calculate time interval available after having lunch with friend
                         timeavailable = TimeGenerator(timeavailable,duration);
                         if(timeavailable==TimeGenerator(current.lunchStart,current.lunchPeriod)){
                             System.out.println("There is no free time left to have lunch.");
@@ -870,7 +903,9 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                         else{
                             System.out.println("\nCurrent free time interval: " + timeavailable + " - " + TimeGenerator(current.lunchStart,current.lunchPeriod));
                         }
+                        //remove the friend from the all the list
                         list.remove(select-1);
+                        list_lunchPeriod.remove(select -1);
                         list_lunchStart.remove(select-1);
                         list_lunchEnd.remove(select-1);
                         int newRep = getEdgeWeight(temp.vertexInfo,current.vertexInfo);
@@ -886,6 +921,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
             } 
        }
        else{
+           //user will have lunch with 3 person at max
            System.out.println("\nYou have chosen 'College Food Court' place. You are allowed to have lunch with 3 person at one time.\n");
            while(true){                
                 if(list.isEmpty()){
@@ -897,6 +933,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                     break;
                 }               
                 System.out.println("Students available in your lunch time interval: ");
+                //removing students with false time interval
                 for(int i=0;i<list.size();i++){
                     if(list_lunchStart.get(i)>=list_lunchEnd.get(i)){
                         list.remove(i);
@@ -910,6 +947,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                 }        
                 int temp_lunchstart=list_lunchStart.get(0);
                 int temp_lunchend=list_lunchEnd.get(0);
+                //getting the time interval which all of the students in the list are available
                 for(int i=1;i<list.size();i++){
                     if(list_lunchStart.get(i)>temp_lunchstart&&list_lunchStart.get(i)<temp_lunchend)
                         temp_lunchstart = list_lunchStart.get(i);
@@ -931,6 +969,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                 for(int i=0;i<list.size();i++){
                     System.out.println((i+1) + ") " + list.get(i));
                 }
+                //list contains 3 at max number of students, user will have lunch with those three students
                 if(list.size()<=3){
                     System.out.println("\nYou will have lunch with: " + list);
                     Vertex<T,Integer> temp = head;
@@ -947,6 +986,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                     }
                 }
                 else{
+                    //list contains more than 3 students, user need to choose 3 students to have lunch with
                     System.out.println("\nStudents available is more than 3 people. You need to choose 3 of students available.\n");
                     ArrayList<T> templist = new ArrayList<>();
                     for(int i=0;i<list.size();i++){
@@ -977,7 +1017,8 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        }
    }
    
-   public int TimeGenerator(int a,int b){ //addition of time, a=lunch period, b=lunch start time
+   //addition of time, a=lunch period, b=lunch start time
+   public int TimeGenerator(int a,int b){ 
        int sum = a + b;
        if(sum%100>=60){
            return (sum+100)-60;
@@ -990,7 +1031,8 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
            return sum;
    }
    
-   public int TimeGenerator2(int a,int b){ //substraction of time
+   //substraction of time
+   public int TimeGenerator2(int a,int b){ 
        if((a-b)<60){
            return a-b;
        }
@@ -1001,6 +1043,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        }
    }
    
+   //event 5 method
     public void event5(T v){
        path.clear();
        Vertex<T,Integer> user = getVertex(v);
@@ -1013,6 +1056,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
        System.out.println("Students name list: " + namelist);
        System.out.print("Choose your crush from list above: ");
        String crushName = s.nextLine();
+       //user will choose one crush out of all students
        Vertex<T,Integer> crush = head;
        while(true){
            if(namelist.contains(crushName)){
@@ -1027,8 +1071,10 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
            System.out.print("Name entered is not available. Please enter one more time: ");
            crushName = s.nextLine();
        }
+       //create an arraylist contains possible starting point of the rumors
        ArrayList<Integer> possibleStartPoint = getNotFriendsListIndex(crush.vertexInfo);
        int rumorsStartPoint;
+       //randomly choose rumors starting point
        while(true){
            rumorsStartPoint = r.nextInt(9)+1;
            if(rumorsStartPoint!=getIndex(crush.vertexInfo)&&possibleStartPoint.contains(rumorsStartPoint))
@@ -1040,19 +1086,26 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                break;
            rumors = rumors.nextVertex;
        }
+       //boolean to indicated visitied vertex
        boolean[] isVisited = new boolean[10];
+       //linked list for all path from the rumors to the crush
        LinkedList<T> pathlist = new LinkedList<>();
+       //add rumor starting point as head element of the linked list
        pathlist.add(rumors.vertexInfo);
        System.out.println("\nIt is believed that the rumors start from " + rumors.vertexInfo + ". You need to stop the rumors from reach to your crush.\n");
        System.out.println("\n\n\nChecking the graph...\n");
+       //call for getAllPath() recursive method to get all the possible path
        getAllPath(getIndex(rumors.vertexInfo),getIndex(crush.vertexInfo),isVisited,pathlist,adjList);
+       //path list is empty, there is no path from rumors to the crush
        if(path.isEmpty()){
            System.out.println("There is no connection between " + rumors.vertexInfo + " to " + crush.vertexInfo + ". Don't worry!\n");
            return;
        }
        System.out.println("These are some of the path that connect " + rumors.vertexInfo + " to " + crush.vertexInfo + ": \n");
+       //list all possible path
        for(int i=0;i<path.size();i++){
            System.out.print("\n#");
+           //deleting path that contains user element, because the rumors will not pass through the user himself
            if(path.get(i).contains(v)){
                path.get(i).print();
                System.out.print("*this path is removed because user is included in this path, the connection breaks\n");
@@ -1073,13 +1126,16 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
            System.out.print(i+1 + ") ");
            path.get(i).print();
        }
-       System.out.println("    ^^^"); //indicator to current rumors position  
+       //indicator to current rumors position
+       System.out.println("    ^^^");   
        System.out.println("\n\nIn the next day, the rumors has move to the next person.");
        int day=1;
+       //while loop to go through day by day, until the list is empty
        while(!path.isEmpty()){  
            for(int i=0;i<path.size();i++){
                path.get(i).removeFirst();
-               if(path.get(i).getSize()==1){
+               //crush element will always be the tail of the list, size==1 means rumors already reach crush
+               if(path.get(i).size==1){
                    System.out.println("\n\n**************************************************");
                    System.out.println("\nOh no! The rumors has reached your crush in path " + (i+1) + "! T_T");
                    return;
@@ -1093,6 +1149,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
            System.out.println("    ^^^");
            System.out.print("\nChoose any path you want to convince to stop the rumors. Enter the path number: ");
            int pathOption;
+           //user will choose specific number of path to remove/convince
            while(true){
                pathOption = s.nextInt();
                if((pathOption-1)>=0&&(pathOption-1)<path.size())
@@ -1103,7 +1160,8 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
             System.out.println("\nNice! You have stop rumors in path " + pathOption + ".");
             T headelement = path.get(pathOption-1).head.element;
             path.remove(pathOption-1);
-            for(int i=0;i<path.size();i++){               
+            for(int i=0;i<path.size();i++){    
+                //when user convinces a student, if the student is included in another path, it will automatically remove the path
                 if(path.get(i).head.element.equals(headelement)){
                     System.out.println("\nBecause both path have the same person, rumors has stop in other path too.");
                     path.remove(i);
@@ -1119,10 +1177,11 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
     
     ArrayList<LinkedList<T>> path = new ArrayList<>();
    
+    //recursive method to get all possible path, implement breadth-first search
     public void getAllPath(Integer s,Integer d,boolean[] isVisited,LinkedList<T> pathlist,ArrayList<Integer>[] adjList){
         if(s.equals(d)){              
             LinkedList<T> temp = new LinkedList<>();
-            for(int i=0;i<pathlist.getSize();i++){
+            for(int i=0;i<pathlist.size;i++){
                 temp.add(i, pathlist.get(i));
             }
             path.add(temp);
