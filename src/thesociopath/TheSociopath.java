@@ -179,6 +179,10 @@ public class TheSociopath {
             int exit = s.nextInt();
             if(exit==0){
                 test = false;
+                System.out.println("\nBefore we end this program, we will show you diving rate(in percentage) for all students: \n");
+                for(int i=1;i<=10;i++){
+                    System.out.println(i + ") " + studentsID[i-1] + " : " + students.getDive(studentsID[i-1]) + "%\n");
+                }
                 break;
             }
         }      
