@@ -157,7 +157,7 @@ public class TheSociopath {
                             Friendship friendRelation = new Friendship();       //create new object of class Friendship
                             System.out.println("\n\n----------Event 6----------");
                             System.out.println("\n");
-                            students.printSpecificEdges(studentsID[0]);
+                            students.printEdges();
                             System.out.println("\nCongratulations for your graduations!\nNow let see how many friends you have made throughout the journey.");
                             System.out.println("\n---List of friends(including you)----");
                             System.out.println(Arrays.toString(studentsID));
