@@ -543,7 +543,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
            while(temp!=null){
                if(temp.vertexInfo.compareTo(v)==0){
                    System.out.println("Current reputation point = " + getRep(v));
-                   System.out.println("Diving Rate = " + temp.dive + ", Lunch Time = " + temp.lunchStart + ", Lunch Period = " + temp.lunchPeriod);
+                   System.out.println("Diving Rate = " + temp.dive + "%, Lunch Time = " + temp.lunchStart + ", Lunch Period = " + temp.lunchPeriod);
                    Edge<T,Integer> currentEdge = temp.firstEdge;
                    System.out.println("List of friends with respective reputation point : ");
                    while (currentEdge != null) {
