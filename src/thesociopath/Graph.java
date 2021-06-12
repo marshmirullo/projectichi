@@ -66,7 +66,7 @@ public class Graph<T extends Comparable<T>,N extends Comparable<N>> {
                     continue;
                 else if(a>=1260&&a<1300)
                     continue;
-                else if(a>=1360&&a<1400)
+                else if(a>=1360&&a<=1400)
                     continue;
                 else if(a%10!=0)
                     continue;
