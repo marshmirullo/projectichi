@@ -1,9 +1,7 @@
 # projectichi
 
-deleted class :
-Event 
-Crush 
-Chit Chat
+Technical report 
+https://drive.google.com/file/d/1AjXWrh3EM9fBOcKLB-HngtIgLqCCDKzK/view?usp=sharing
 
-event6 try pahamkan sbb dia dfs, aku pun ambik code org dulu nak bagi paham -akim comel
-
+Managerial report
+https://drive.google.com/file/d/1ZxVzc-QocuYM_eRb8AARrD4yBvvIC5BK/view?usp=sharing
